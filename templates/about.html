@@ -3,7 +3,7 @@
 <div class="wrap about">
   <h1 class="about-title">About me</h1>
   <div class="about-portrait">
-    {% set sz = img_size(data.portrait) %}<img src="{{ thumb(data.portrait, 800) }}" alt="Portrait of Sean Redenbaugh" width="{{ sz[0] }}" height="{{ sz[1] }}">
+    {% set sz = img_size(data.portrait) %}<img src="{{ thumb(data.portrait, 800) }}" alt="Sean Redenbaugh in a leather flight jacket and sunglasses" width="{{ sz[0] }}" height="{{ sz[1] }}">
     <blockquote class="about-quote"><p>{{ data.quote.text }}</p><footer>{{ data.quote.by }}</footer></blockquote>
   </div>
   <div class="about-body">
