@@ -52,7 +52,8 @@ h3 { font-size: 1.35rem; }
 p { margin: 0 0 1em; }
 blockquote { margin: 0; }
 .wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
-.wrap.narrow, .narrow { max-width: calc(var(--narrow) + 2 * var(--gutter)); }
+/* narrow text columns stay left-aligned with the wordmark in the header */
+.wrap.narrow > * { max-width: var(--narrow); }
 .wrap-wide { max-width: 1600px; margin-inline: auto; padding-inline: var(--gutter); }
 .visually-hidden, .hp { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .skip { position: absolute; left: -999px; top: 8px; background: var(--page); padding: .5em 1em; z-index: 100; }
