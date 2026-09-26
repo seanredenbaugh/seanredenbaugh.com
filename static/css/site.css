@@ -242,6 +242,7 @@ blockquote { margin: 0; }
 .sonnet { padding: 0 0 2.6em; margin-bottom: 2.6em; border-bottom: 1px solid var(--rule); max-width: 34em; scroll-margin-top: 90px; }
 .sonnet h2 { font-size: 1.55rem; }
 .sonnet .verse-stanza { font-size: 1.2em; line-height: 1.55; }
+.sonnet .verse-stanza:not(.couplet) { margin-bottom: .45em; }
 .couplet { padding-left: 1.5em; }
 @media (max-width: 860px) { .sonnets-layout { grid-template-columns: 1fr; } .sonnet-index { display: none; } }
 
