@@ -162,11 +162,11 @@ blockquote { margin: 0; }
 /* Two lines sized to the same width, like the old site: a bold serif line over a condensed all-caps line */
 /* --k = 100 / (width of the line set at 100px); recalculate if the wording changes */
 .motto-inner { --k-lead: .0323; --k-main: .0453; max-width: 960px; margin: 0 auto; container-type: inline-size; }
-.motto-lead { font-family: var(--text); font-weight: 700; color: var(--on-night-muted); line-height: 1.2; margin: 0 0 .15em; white-space: nowrap; font-size: calc(100cqi * var(--k-lead)); }
+.motto-lead { font-family: var(--text); font-weight: 700; color: var(--on-night-muted); line-height: 1.2; margin: 0 0 .75em; white-space: nowrap; font-size: calc(100cqi * var(--k-lead)); }
 .motto-main { font-family: "Roboto Condensed", "Arial Narrow", sans-serif; font-weight: 700; text-transform: uppercase; color: var(--on-night); line-height: 1.1; margin: 0; white-space: nowrap; font-size: calc(100cqi * var(--k-main)); }
 @media (max-width: 600px) {
   .motto-lead, .motto-main { white-space: normal; text-wrap: balance; }
-  .motto-lead { font-size: 1.1rem; margin-bottom: .5em; }
+  .motto-lead { font-size: 1.1rem; margin-bottom: 1em; }
   .motto-main { font-size: 1.9rem; }
 }
 
@@ -199,7 +199,16 @@ blockquote { margin: 0; }
 .poem-feature { background: var(--page-2); }
 .poem-card h3 { font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.2rem); }
 .poem-card h3 a { text-decoration: none; }
-.poem-actions { display: flex; gap: 28px; align-items: baseline; margin-top: 1.5em; }
+.poem-actions { margin-top: 1.5em; }
+.poem-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 1.6em; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+.poem-all { color: var(--muted); font-size: 1rem; }
+.poem-all:hover { color: var(--red); }
+.poem-nav { display: flex; align-items: center; gap: 10px; }
+.poem-nav[hidden] { display: none; }
+.poem-arrow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--rule); background: var(--page); color: var(--ink); font-family: var(--text); font-size: 1.7rem; line-height: 1; cursor: pointer; display: grid; place-items: center; padding: 0 0 4px; transition: border-color .15s, color .15s; }
+.poem-arrow:hover { border-color: var(--red); color: var(--red); }
+.poem-count { color: var(--muted); font-size: .95rem; min-width: 4.5em; text-align: center; font-variant-numeric: lining-nums; }
+.poem-rotator:focus-visible { outline-offset: 8px; }
 
 .photo-strip { background: var(--night); color: var(--on-night); padding-bottom: clamp(48px, 7vw, 90px); }
 .strip { list-style: none; margin: 0; padding: 0 var(--gutter); padding-left: max(var(--gutter), calc((100vw - var(--wrap)) / 2 + var(--gutter))); scroll-padding-inline: max(var(--gutter), calc((100vw - var(--wrap)) / 2 + var(--gutter))); display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; }

@@ -30,15 +30,39 @@
     el.appendChild(b);
   });
 
-  // home page: rotate through poems
+  // home page: poem carousel with arrows, keyboard and swipe
   var rot = document.querySelector('.poem-rotator');
-  var nextBtn = document.querySelector('[data-next-poem]');
-  if (rot) {
+  var pnav = document.querySelector('.poem-nav');
+  if (rot && pnav) {
     var cards = rot.querySelectorAll('.poem-card');
+    var countEl = pnav.querySelector('.poem-count');
     var cur = Math.floor(Math.random() * cards.length);
-    var show = function (i) { cards.forEach(function (c, j) { c.hidden = j !== i; }); };
+    var show = function (i, focus) {
+      cur = (i + cards.length) % cards.length;
+      cards.forEach(function (c, j) { c.hidden = j !== cur; });
+      countEl.textContent = (cur + 1) + ' of ' + cards.length;
+      if (focus) {
+        var top = rot.getBoundingClientRect().top;
+        if (top < 70) window.scrollBy({ top: top - 90, behavior: 'smooth' });
+      }
+    };
+    pnav.hidden = false;
     show(cur);
-    if (nextBtn) nextBtn.addEventListener('click', function () { cur = (cur + 1) % cards.length; show(cur); });
+    pnav.querySelector('[data-poem-prev]').addEventListener('click', function () { show(cur - 1, true); });
+    pnav.querySelector('[data-poem-next]').addEventListener('click', function () { show(cur + 1, true); });
+    rot.tabIndex = 0;
+    rot.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { show(cur - 1); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { show(cur + 1); e.preventDefault(); }
+    });
+    var sx = null, sy = null;
+    rot.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    rot.addEventListener('touchend', function (e) {
+      if (sx === null) return;
+      var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(cur + (dx < 0 ? 1 : -1), true);
+      sx = null;
+    });
   }
 
   // lightbox for galleries

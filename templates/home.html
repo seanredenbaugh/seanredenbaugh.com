@@ -49,29 +49,26 @@
 
 <section class="poem-feature">
   <div class="wrap narrow">
-    <h2 class="section-title">A poem</h2>
-    <div class="poem-rotator" data-count="{{ poem_pool | length }}">
+    <div class="poem-head">
+      <h2 class="visually-hidden">Poems</h2>
+      <a class="poem-all" href="/other-poetry/">All {{ poem_count }} poems</a>
+      <div class="poem-nav" hidden>
+        <button type="button" class="poem-arrow" data-poem-prev aria-label="Previous poem">‹</button>
+        <span class="poem-count" aria-live="polite"></span>
+        <button type="button" class="poem-arrow" data-poem-next aria-label="Next poem">›</button>
+      </div>
+    </div>
+    <div class="poem-rotator" aria-roledescription="carousel" aria-label="Poems">
       {% for p in poem_pool %}
-      <article class="poem-card"{% if not loop.first %} hidden{% endif %}>
+      <article class="poem-card" aria-roledescription="slide" aria-label="{{ loop.index }} of {{ poem_pool | length }}"{% if not loop.first %} hidden{% endif %}>
         <h3><a href="{{ p.url }}">{{ p.title }}</a></h3>
         <div class="verse">{{ p.body | verse | safe }}</div>
         <p class="poem-date">{{ p.date | longdate }}</p>
       </article>
       {% endfor %}
     </div>
-    <p class="poem-actions"><button type="button" class="text-button" data-next-poem>Read another</button> <a href="/other-poetry/">All {{ poem_count }} poems</a></p>
   </div>
 </section>
 
-<section class="photo-strip" aria-label="Photographs">
-  <div class="wrap">
-    <h2 class="section-title"><a href="/photography/">Photography</a></h2>
-  </div>
-  <ul class="strip">
-    {% for ph in photos[:10] %}
-    <li><a href="/photography/"><img src="{{ thumb(ph.src, 600) }}" alt="{{ ph.title }}" loading="lazy"></a></li>
-    {% endfor %}
-  </ul>
-</section>
 
 {% endblock %}
