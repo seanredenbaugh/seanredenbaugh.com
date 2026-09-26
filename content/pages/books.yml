@@ -1,3 +1,4 @@
+# Books page. "amazon" is each book's Amazon link; "amazon_author_page" appears under every book.
 books:
 - slug: 1000-shades-of-red
   title: 1000 Shades of Red
@@ -22,6 +23,7 @@ books:
   - I look up at the top as I approach, to the ledge perched high above the trees overlooking the concrete steps and bicycle racks below. I imagine being one of those kids at the end of his or her wits, standing there looking down at the parking curb that’s about to go through their head at thirty miles an hour. All because of a piece of paper with questions typed on it, handed to them by a total stranger. Or because someone didn’t want to be with them anymore. Or who knows why. I honestly can’t comprehend it. I try to wrap my brain around the idea and make sense of it. What were they thinking? What were they feeling? How could they possibly justify jumping? Did they regret it during the two or three seconds they were suspended in the air before their bodies crashed messily in front of people? Did they spend that time thinking about their grades? About the test? About a girl? Or about the infinity they are leaping into? What was that final moment like? When their atoms became part of the
     earth and no longer a part of themselves. When the spaces between dissipated. Dreams and hopes exploded on impact. Books and music scattered on the pavement. Love and romance liquified. Sex and pain and memories drying in the sun. The past, present, and future in a thousand shades of red painting the sidewalk. Oozing from a former something. A current nothing. A memory. Surrounded by the screams of others. Maybe that should be our house mural. That would surely make people think. But their demise makes no sense to me. A test or a class or a grade is a blip on the radar. A dot on an infinite line. A commercial break. A meaningless, forgettable thing. A speck on the vast mural of life! It pales next to friendship! It dissolves next to Love!
   - Thinking about it all makes me lose my appetite for my next class. Statistical Probabilities. Probably, pun intended, my least favorite class ever. But I can’t do it today. I can’t sit through another commercial right now. So I walk back down the steps of Ballantine Hall, across the grassy area, and sit at the base of a tree outside of Woodburn Hall across the way. No one has ever jumped off of this one. It’s not tall enough. It would only add pain to pain.
+  amazon: https://www.amazon.com/dp/B0DWZM3X5F
 - slug: salima-falls
   title: Salima Falls
   kind: Literary Fiction Novel
@@ -45,6 +47,7 @@ books:
   - He felt the engine rumble as he held his foot on the brake and revved it up. The sound reverberated in his ears and the sun gleamed in his eye. You just have to believe… He closed his eyes and pictured Emma, sitting on her porch waiting for him. “ I believe.” He didn’t know if she hated him or missed him, or even thought of him. He didn’t know if he could find her again, but he didn’t care. “ I believe.” He had to try. He had to go to Salima Falls. “ I believe.” He had to look into those eyes again…
   - He opened his eyes and stared one more time at the corn in front of him.
   - “I believe,” he said. Then he closed his eyes and slammed his foot on the gas.
+  amazon: https://www.amazon.com/dp/0692850821
 - slug: sunlight-parted
   title: Sunlight Parted
   kind: Literary Fiction Novel
@@ -74,6 +77,7 @@ books:
     text: Sunlight Parted is an amazing love story without being sappy or too saccharin, it draws the reader in with high emotional stakes and an incredibly interesting take on life and death. I found it so meaningful, I got teary at the end! Books don’t usually affect me so directly, but this packs a heck of an emotional punch. Bravo!
     by: Cara Lockwood
     role: USA Today best-selling author of 10 books, professional editor
+  amazon: https://www.amazon.com/dp/0692377646
 - slug: distant-lands-of-solitude
   title: Distant Lands of Solitude
   kind: Poetry & Photography Collection
@@ -167,3 +171,5 @@ books:
     text: These photographs and verses are a welcoming chance and reminder to slow down and appreciate the small things that give meaning and purpose to life. Whether it is a drop of water collecting on a fallen leaf, or a couplet capturing the complexities of beauty, this book definitely gives us all something to enjoy and reflect on.
     by: Karl Mayer
     role: Book collector & avid reader
+  amazon: https://www.amazon.com/dp/1425963765
+amazon_author_page: https://www.amazon.com/stores/Sean-Michael-Redenbaugh/author/B00TYXXZQU/allbooks

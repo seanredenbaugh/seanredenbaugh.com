@@ -31,10 +31,11 @@
       {% endif %}
 
       <p class="buy">
-        <a class="button" href="https://www.amazon.com/s?k={{ q }}&i=stripbooks" rel="noopener">Buy on Amazon</a>
+        <a class="button" href="{{ b.amazon or ('https://www.amazon.com/s?k=' ~ q ~ '&i=stripbooks') }}">Buy on Amazon</a>
         <a class="button button-quiet" href="https://www.barnesandnoble.com/s/{{ q }}" rel="noopener">Barnes &amp; Noble</a>
         {% if b.price %}<a class="button-link" href="/contact/?subject={{ ('Signed copy of ' ~ b.title) | urlencode }}">Ask for a signed copy</a>{% endif %}
       </p>
+      {% if author_page %}<p class="author-page-link"><a href="{{ author_page }}">All my books on my Amazon author page</a></p>{% endif %}
 
       <dl class="book-details">
         {% for row in b.details %}<div><dt>{{ row[0] }}</dt><dd>{{ row[1] }}</dd></div>{% endfor %}
