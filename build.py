@@ -184,13 +184,10 @@ def build():
            description="Screenplays by Sean Redenbaugh, including the feature-film adaptation of Sunlight Parted.")
     render("photography.html", "/photography/", data=photography, title="Photography",
            description="Nature photography by Sean Redenbaugh — sunrises, water, light and the quiet corners of Indiana and beyond.")
-    render("gallery.html", "/web-design/", items=load_yaml("web-design.yml")["items"], title="Web design",
-           lede="Websites I’ve designed and built over twenty-some years of web work.",
-           description="Websites designed and built by Sean Redenbaugh.")
     render("about.html", "/about/", data=about, title="About",
-           description="About Sean Redenbaugh — writer, poet, photographer, designer and IU grad living in Evansville, Indiana.")
+           description="About Sean Redenbaugh — writer, poet, photographer and IU grad living in Evansville, Indiana.")
     render("contact.html", "/contact/", title="Contact",
-           description="Get in touch with Sean Redenbaugh about books, writing or web design.")
+           description="Get in touch with Sean Redenbaugh about books and writing.")
 
     for i, d in enumerate(poems):
         render("poem.html", d["url"], post=d, title=d["title"], description=plain(d["body"], 160),

@@ -1,6 +1,6 @@
 # seanredenbaugh.com
 
-The website of Sean Redenbaugh — books, poetry, sonnets, scripts, photography and web design.
+The website of Sean Redenbaugh — books, poetry, sonnets, scripts and photography.
 It's a plain static site (HTML, CSS, a little JavaScript, and one PHP file for the contact form), built by
 a small Python script and hosted on Hostinger. No WordPress, no database, no plugins to update.
 
@@ -9,7 +9,7 @@ a small Python script and hosted on Hostinger. No WordPress, no database, no plu
 ```
 content/            what the site says
   poems/            one file per poem           -> /<file-name>/
-  pages/            books, sonnets, photography, web design gallery, about, home page text (YAML)
+  pages/            books, sonnets, photography, about, home page text (YAML)
   site.yml          tagline, menu, footer, contact details
 templates/          the page layouts (Jinja2 HTML)
 static/             copied as-is: css, js, fonts, images (wp-content/uploads), contact.php, .htaccess
@@ -38,6 +38,14 @@ Second line</p>
 ```
 
 Put new images in `static/wp-content/uploads/`. The build makes small, fast copies automatically.
+
+**Remove or add a photo** — in `content/pages/photography.yml`, delete (or copy) an entry's three lines:
+
+```yaml
+- src: /wp-content/uploads/2013/01/0009-Dominoes.jpg
+  number: '0009'
+  title: Dominoes
+```
 
 **Add a sonnet, book, or photo** — edit `content/pages/sonnets.yml`, `books.yml`, or `photography.yml`.
 Each entry follows the pattern of the ones already there.
@@ -79,7 +87,7 @@ The old WordPress site is on Bluehost. Once the new site looks right on Hostinge
 5. Keep the Bluehost account for a couple of weeks as a backup, then cancel it.
 
 Old WordPress addresses keep working: pages and poems kept their URLs; the retired journal posts
-and graphic design page redirect to the home page and web design page; and shop, cart, category,
+and design pages redirect to the home page; and shop, cart, category,
 date-archive and feed links redirect to the right new page (see `static/.htaccess`).
 
 ## Notes

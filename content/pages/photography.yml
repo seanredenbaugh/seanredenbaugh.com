@@ -1,3 +1,6 @@
+# Photography page. Photos appear in the order listed under "photos:".
+# To remove a photo, delete its three lines (the "- src:" line plus its number and title).
+# To add one, upload the image to static/wp-content/uploads/ and copy an entry.
 intro: In 2004 I moved to Evansville, Indiana to start a photography business. I spent 7 years shooting mostly weddings, but also did several family and senior portrait sessions. Mostly, however, I Loved nature photography, and would escape whenever I could to a park or countryside to fire away. Below are some of the images I captured during that time, and several of these were published in my 2006 book titled Distant Lands of Solitude. You can see more about that book by clicking on the Books link at the top. These images will be available for purchase eventually from this website.
 portrait: /wp-content/uploads/2014/07/behindcamera.jpg
 quotes:

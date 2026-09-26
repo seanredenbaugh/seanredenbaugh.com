@@ -5,7 +5,7 @@
 name: Sean Redenbaugh
 
 # The sentence under your name at the top of the home page
-tagline: Novelist, poet, photographer and designer from Evansville, Indiana. A dreamer at heart, a philosopher and thinker by nature.
+tagline: Novelist, poet and photographer from Evansville, Indiana. A dreamer at heart, a philosopher and thinker by nature.
 
 # The italic lines in the footer of every page (use | and a new line for each line)
 footer_line: |
@@ -18,7 +18,7 @@ phone: +1 812 202 0800
 location: Evansville, Indiana
 
 # What Google shows under the site's name in search results
-description: Sean Redenbaugh is an Evansville, Indiana author and poet — the novels 1000 Shades of Red, Salima Falls and Sunlight Parted — and a photographer and designer.
+description: Sean Redenbaugh is an Evansville, Indiana author and poet — the novels 1000 Shades of Red, Salima Falls and Sunlight Parted — and a nature photographer.
 
 # The top menu. Each item has a label and a link.
 # Add "children" to make a dropdown (the parent link is used on phones and when clicked).
@@ -36,8 +36,6 @@ menu:
         link: /scripts/
   - label: Photography
     link: /photography/
-  - label: Web design
-    link: /web-design/
   - label: About
     link: /about/
   - label: Contact
