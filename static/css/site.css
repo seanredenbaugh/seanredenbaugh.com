@@ -134,6 +134,7 @@ blockquote { margin: 0; }
 
 /* ------------------------------------------------ home: sections */
 .shelf, .crafts, .essence, .poem-feature, .journal-teaser, .photo-strip { padding: clamp(56px, 8vw, 110px) 0; }
+.shelf { padding-top: 80px; }
 .shelf-list { list-style: none; margin: 0; padding: 0; display: flex; gap: clamp(16px, 3vw, 40px); align-items: flex-start; }
 /* each book's width is proportional to its cover's shape, so all covers end up the same height */
 .shelf-list li { flex: var(--r) 1 0; min-width: 0; }
