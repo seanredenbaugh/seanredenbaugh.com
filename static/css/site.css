@@ -98,6 +98,8 @@ blockquote { margin: 0; }
 .section-title { font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.8rem); margin-bottom: .8em; }
 .section-title a { text-decoration: none; }
 .page-head { padding: clamp(48px, 7vw, 96px) 0 clamp(24px, 4vw, 48px); }
+.page-head .wrap > :last-child { margin-bottom: 0; }
+.script-page-head { padding-bottom: 24px; }
 .page-head h1 { margin-bottom: .35em; }
 .lede { font-size: 1.3em; line-height: 1.5; color: var(--muted); max-width: 40em; }
 .lede-small { color: var(--muted); max-width: 44em; }
