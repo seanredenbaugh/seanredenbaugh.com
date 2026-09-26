@@ -390,3 +390,7 @@ blockquote { margin: 0; }
   .couplet { padding-left: 1em; }
   .prose td:first-child { width: 38%; }
 }
+
+/* The "Red" in Redenbaugh turns red on hover */
+.name-red .red { transition: color .35s ease; }
+.name-red:hover .red, .name-red:focus-visible .red { color: var(--red); }
