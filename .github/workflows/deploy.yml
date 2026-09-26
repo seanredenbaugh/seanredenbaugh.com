@@ -9,6 +9,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      clean:
+        description: "Wipe the server folder and upload everything fresh (fixes a stuck upload)"
+        type: boolean
+        default: false
 
 concurrency:
   group: deploy
@@ -45,3 +50,7 @@ jobs:
           protocol: ftps
           local-dir: dist/
           server-dir: ./
+          timeout: 180000
+          # A full fresh upload runs when started by hand with "clean" ticked,
+          # or when a commit message contains [clean-deploy].
+          dangerous-clean-slate: ${{ github.event.inputs.clean == 'true' || contains(github.event.head_commit.message, '[clean-deploy]') }}
