@@ -43,7 +43,8 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
           sudo apt-get update -qq > /dev/null && sudo apt-get install -y -qq lftp > /dev/null
-          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" <<'LFTP'
+          set +e
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" > lftp.log 2>&1 <<'LFTP'
           set ftp:ssl-allow true
           set ftp:ssl-force true
           set ftp:ssl-protect-data true
@@ -58,3 +59,11 @@ jobs:
           mirror --reverse --parallel=6 --verbose=1 --include-glob=*.html --include-glob=*.css --include-glob=*.js --include-glob=*.xml --include-glob=*.php --include-glob=.htaccess --include-glob=*.txt --include-glob=*.svg dist/ ./
           bye
           LFTP
+          status=$?
+          # Show the last lines of the upload log as annotations, so failures are visible on the run page
+          if [ $status -ne 0 ]; then
+            tail -n 8 lftp.log | sed 's/^/::error::/'
+          else
+            tail -n 3 lftp.log
+          fi
+          exit $status
