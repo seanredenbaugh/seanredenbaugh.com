@@ -48,10 +48,12 @@ RewriteRule ^$ /photography/? [L,R=301]
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   <FilesMatch "\.(css|js|webp|jpe?g|png|gif|svg|pdf|woff2?)$">
+    # Styles and scripts carry a ?v= fingerprint that changes when they change
     Header set Cache-Control "public, max-age=2592000"
   </FilesMatch>
-  <FilesMatch "\.html$">
-    Header set Cache-Control "public, max-age=600"
+  # Pages, feed and sitemap: always check for a newer version, so edits show up right away
+  <FilesMatch "\.(html|xml|php)$">
+    Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
 </IfModule>
 

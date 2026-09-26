@@ -138,7 +138,16 @@ def responsive_images(body):
 
 # ------------------------------------------------------------------ render
 env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape(["html"]))
-env.globals.update(site=SITE, nav=NAV, thumb=thumb, img_size=img_size)
+import hashlib
+
+
+def asset(path):
+    """/css/site.css -> /css/site.css?v=<fingerprint>, so browsers and the CDN fetch it again after an edit."""
+    h = hashlib.md5((STATIC / path.lstrip("/")).read_bytes()).hexdigest()[:10]
+    return f"{path}?v={h}"
+
+
+env.globals.update(site=SITE, nav=NAV, thumb=thumb, img_size=img_size, asset=asset)
 env.filters["longdate"] = lambda d: f"{d:%B} {d.day}, {d.year}"
 env.filters["plain"] = plain
 

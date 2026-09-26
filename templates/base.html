@@ -19,7 +19,7 @@
 <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="/feed.xml">
 <link rel="preload" href="/fonts/eb-garamond-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/bodoni-moda-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/site.css?v=1">
+<link rel="stylesheet" href="{{ asset('/css/site.css') }}">
 {% block head %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
@@ -78,6 +78,6 @@
   <figure><img alt=""><figcaption></figcaption></figure>
   <button class="lb-next" aria-label="Next image">›</button>
 </dialog>
-<script src="/js/site.js?v=1" defer></script>
+<script src="{{ asset('/js/site.js') }}" defer></script>
 </body>
 </html>
