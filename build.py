@@ -186,6 +186,8 @@ def build():
     sonnets = load_yaml("sonnets.yml")
     sonnets["sonnets"].sort(key=lambda s: s["number"], reverse=True)
     photography = load_yaml("photography.yml")
+    for q in photography["quotes"]:
+        q["text_len"] = len(q["text"])
     about = load_yaml("about.yml")
 
     render("home.html", "/", books=books,

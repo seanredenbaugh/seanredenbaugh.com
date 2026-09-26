@@ -3,15 +3,11 @@
 {% block main %}
 <header class="page-head">
   <div class="wrap photo-head">
-    <div>
-      <h1>Photography</h1>
-      {% if data.intro %}<p class="lede-small">{{ data.intro }}</p>{% endif %}
-    </div>
-    <div class="photo-quotes">
-      {% for q in data.quotes %}
-      <blockquote><p>{{ q.text }}</p><footer>{{ q.by }}</footer></blockquote>
-      {% endfor %}
-    </div>
+    <h1>Photography</h1>
+    {% if data.intro %}<p class="lede-small">{{ data.intro }}</p>{% endif %}
+    {% for q in data.quotes | sort(attribute='text_len') %}
+    <blockquote class="photo-quote"><p>{{ q.text }}</p><footer>{{ q.by }}</footer></blockquote>
+    {% endfor %}
   </div>
 </header>
 <div class="wrap-wide">
