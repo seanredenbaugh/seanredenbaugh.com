@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block main %}
+<header class="page-head">
+  <div class="wrap narrow">
+    <h1>Poetry</h1>
+    <p class="lede">{{ count }} poems, newest first. For the fourteen-line kind, see the <a href="/sonnets/">sonnets</a>.</p>
+  </div>
+</header>
+<div class="wrap narrow poem-index">
+  {% for year, items in groups.items() %}
+  <section class="year-group">
+    <h2 class="year">{{ year }}</h2>
+    <ul>
+      {% for p in items %}
+      <li><a href="{{ p.url }}"><span class="pi-title">{{ p.title }}</span><span class="pi-line">{{ p.first_line }}</span></a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

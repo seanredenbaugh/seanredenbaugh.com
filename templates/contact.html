@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="wrap contact">
+  <div class="contact-intro">
+    <h1>Get in touch</h1>
+    <p>If you have general questions about me or my work, send me an email or use the form. I answer most messages quickly. For graphic design or web design work, a phone call may be better — I answer from 8am to 9pm nearly every day.</p>
+    <p class="note">I no longer work as a professional photographer, so please don’t ask about available dates or pricing.</p>
+    <ul class="contact-list">
+      <li><span>Email</span><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+      <li><span>Phone</span><a href="tel:{{ site.phone_href }}">{{ site.phone }}</a></li>
+      <li><span>Location</span>{{ site.location }}</li>
+    </ul>
+  </div>
+  <form class="contact-form" method="post" action="/contact.php">
+    <div class="form-status" role="status" hidden></div>
+    <label>Your name<input name="name" autocomplete="name" required maxlength="120"></label>
+    <label>Your email<input name="email" type="email" autocomplete="email" required maxlength="200"></label>
+    <label>Subject<input name="subject" maxlength="200"></label>
+    <label>Message<textarea name="message" rows="7" required maxlength="5000"></textarea></label>
+    <label class="hp" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+    <input type="hidden" name="t" value="">
+    <button class="button" type="submit">Send message</button>
+  </form>
+</div>
+{% endblock %}

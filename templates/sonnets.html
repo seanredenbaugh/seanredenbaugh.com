@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block body_class %}reading{% endblock %}
+{% block main %}
+<header class="page-head">
+  <div class="wrap narrow">
+    <h1>Sonnets</h1>
+    {% for p in data.intro %}<p class="lede-small">{{ p }}</p>{% endfor %}
+  </div>
+</header>
+<div class="wrap sonnets-layout">
+  <nav class="sonnet-index" aria-label="Sonnets">
+    <ol reversed>
+      {% for s in data.sonnets %}<li><a href="#sonnet-{{ s.number }}"><span class="num">{{ s.number }}</span> {{ s.title }}</a></li>{% endfor %}
+    </ol>
+  </nav>
+  <div class="sonnet-list">
+    {% for s in data.sonnets %}
+    <article class="sonnet" id="sonnet-{{ s.number }}">
+      <h2><span class="num">{{ s.number }}</span><span class="visually-hidden">. </span>{{ s.title }}</h2>
+      <p class="verse-stanza">{% for l in s.lines %}{% if loop.index == 13 %}</p><p class="verse-stanza couplet">{% endif %}{{ l }}{% if not loop.last and loop.index != 12 %}<br>{% endif %}{% endfor %}</p>
+      {% if s.date %}<p class="poem-date">{{ s.date }}</p>{% endif %}
+    </article>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body_class %}reading{% endblock %}
+{% block main %}
+<article class="wrap narrow post-page">
+  <p class="crumb"><a href="/blog/">Journal</a></p>
+  <h1>{{ post.title }}</h1>
+  <p class="entry-date"><time datetime="{{ post.date }}">{{ post.date | longdate }}</time>{% if post.tags %}<span class="tags">{{ post.tags | join(', ') }}</span>{% endif %}</p>
+  {% if post.image and not post.image_in_body %}
+  <figure class="post-hero"><img src="{{ thumb(post.image, 1200) }}" alt="" {% set sz = img_size(post.image) %}width="{{ sz[0] }}" height="{{ sz[1] }}"></figure>
+  {% endif %}
+  <div class="prose">{{ post.body_html | safe }}</div>
+  <nav class="pager" aria-label="More journal entries">
+    {% if older %}<a class="pager-prev" href="{{ older.url }}"><span>Earlier</span>{{ older.title }}</a>{% endif %}
+    {% if newer %}<a class="pager-next" href="{{ newer.url }}"><span>Later</span>{{ newer.title }}</a>{% endif %}
+  </nav>
+</article>
+{% endblock %}

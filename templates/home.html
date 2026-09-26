@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block body_class %}home{% endblock %}
+{% block main %}
+{% set new = books[0] %}
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <h1>Sean Redenbaugh</h1>
+      <p class="hero-lede">Novelist, poet, photographer and designer from Evansville, Indiana. A dreamer at heart, a philosopher and thinker by nature.</p>
+      <p class="hero-links">
+        <a href="/my-books/">The books</a>
+        <a href="/other-poetry/">Poetry</a>
+        <a href="/photography/">Photography</a>
+      </p>
+    </div>
+    <a class="hero-book" href="/my-books/#{{ new.slug }}">
+      <img src="{{ thumb(new.cover, 700) }}" alt="{{ new.title }} book cover" width="700" height="1067">
+      <span class="hero-book-note">
+        <span class="hero-book-kicker">New novel, {{ new.year }}</span>
+        <span class="hero-book-title">{{ new.title }}</span>
+        <span class="hero-book-tag">{{ new.tagline }}</span>
+      </span>
+    </a>
+  </div>
+  <div class="horizon" aria-hidden="true"></div>
+</section>
+
+<section class="shelf">
+  <div class="wrap">
+    <h2 class="section-title">Books</h2>
+    <ul class="shelf-list">
+      {% for b in books %}
+      <li>
+        <a href="/my-books/#{{ b.slug }}">
+          <img src="{{ thumb(b.cover, 500) }}" alt="{{ b.title }} cover" loading="lazy">
+          <span class="shelf-title">{{ b.title }}</span>
+          <span class="shelf-meta">{{ b.kind }}, {{ b.year }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="motto">
+  <p class="wrap">Do not fear death, fear only the unlived life.</p>
+</section>
+
+<section class="crafts">
+  <div class="wrap crafts-inner">
+    <h2 class="section-title">What I make</h2>
+    <dl class="craft-list">
+      <div><dt><a href="/my-books/">Fiction</a></dt><dd>Three novels: Sunlight Parted, Salima Falls and 1000 Shades of Red.</dd></div>
+      <div><dt><a href="/sonnets/">Poetry &amp; sonnets</a></dt><dd>Over a hundred and forty poems, and a run of sonnets in iambic pentameter.</dd></div>
+      <div><dt><a href="/photography/">Nature photography</a></dt><dd>Light, water and open country, collected in the photo and poetry book Distant Lands of Solitude.</dd></div>
+      <div><dt><a href="/web-design/">Web design</a></dt><dd>More than twenty years of building websites.</dd></div>
+      <div><dt><a href="/graphic-design/">Graphic design</a></dt><dd>Billboards, ads, logos, book covers and more.</dd></div>
+      <div><dt><a href="/contact/">Software</a></dt><dd>Manufacturing, business and web software.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="essence">
+  <div class="wrap essence-inner">
+    <div class="essence-text">
+      <h2 class="section-title">The essence</h2>
+      <blockquote class="prompt">
+        <p>{{ home.prompt.text }}</p>
+        <footer>{{ home.prompt.by }}</footer>
+      </blockquote>
+      {% for p in home.essay %}<p>{{ p | safe }}</p>{% endfor %}
+    </div>
+    <aside class="essence-songs" aria-label="Songs that feel like me">
+      <p class="songs-note">The songs that feel very… me.</p>
+      {% for id in home.songs %}<div class="yt" data-id="{{ id }}"></div>{% endfor %}
+    </aside>
+  </div>
+</section>
+
+<section class="poem-feature">
+  <div class="wrap narrow">
+    <h2 class="section-title">A poem</h2>
+    <div class="poem-rotator" data-count="{{ poem_pool | length }}">
+      {% for p in poem_pool %}
+      <article class="poem-card"{% if not loop.first %} hidden{% endif %}>
+        <h3><a href="{{ p.url }}">{{ p.title }}</a></h3>
+        <div class="verse">{{ p.body | safe }}</div>
+        <p class="poem-date">{{ p.date | longdate }}</p>
+      </article>
+      {% endfor %}
+    </div>
+    <p class="poem-actions"><button type="button" class="text-button" data-next-poem>Read another</button> <a href="/other-poetry/">All {{ poem_count }} poems</a></p>
+  </div>
+</section>
+
+<section class="photo-strip" aria-label="Photographs">
+  <div class="wrap">
+    <h2 class="section-title"><a href="/photography/">Photography</a></h2>
+  </div>
+  <ul class="strip">
+    {% for ph in photos[:10] %}
+    <li><a href="/photography/"><img src="{{ thumb(ph.src, 600) }}" alt="{{ ph.title }}" loading="lazy"></a></li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="journal-teaser">
+  <div class="wrap">
+    <h2 class="section-title"><a href="/blog/">From the journal</a></h2>
+    <ul class="entry-list">
+      {% for d in journal %}
+      <li class="entry">
+        {% if d.image %}<a class="entry-img" href="{{ d.url }}" tabindex="-1" aria-hidden="true"><img src="{{ thumb(d.image, 600) }}" alt="" loading="lazy"></a>{% endif %}
+        <div>
+          <h3><a href="{{ d.url }}">{{ d.title }}</a></h3>
+          <p class="entry-date"><time datetime="{{ d.date }}">{{ d.date | longdate }}</time></p>
+          <p>{{ d.summary }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

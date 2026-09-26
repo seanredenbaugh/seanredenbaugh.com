@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block main %}
+<header class="page-head">
+  <div class="wrap">
+    <h1>Books</h1>
+    <p class="lede">Three novels and a collection of poems and photographs. Paperbacks and Kindle editions are available from Amazon, Barnes &amp; Noble and other booksellers.</p>
+    <nav class="book-jump" aria-label="Jump to a book">
+      {% for b in books %}<a href="#{{ b.slug }}">{{ b.title }}</a>{% endfor %}
+    </nav>
+  </div>
+</header>
+
+{% for b in books %}
+{% set q = (b.title ~ ' Sean Redenbaugh') | urlencode %}
+<article class="book" id="{{ b.slug }}">
+  <div class="wrap book-inner">
+    <div class="book-cover">
+      <img src="{{ thumb(b.cover, 700) }}" alt="{{ b.title }} cover" loading="{{ 'eager' if loop.first else 'lazy' }}">
+    </div>
+    <div class="book-body">
+      <h2>{{ b.title }}</h2>
+      <p class="book-kind">{{ b.kind }}, {{ b.year }}</p>
+      {% if b.tagline %}<p class="book-tagline">{{ b.tagline }}</p>{% endif %}
+      {% for p in b.synopsis %}<p>{{ p }}</p>{% endfor %}
+
+      {% if b.praise %}
+      <blockquote class="praise">
+        <p>{{ b.praise.text }}</p>
+        <footer><cite>{{ b.praise.by }}</cite>, {{ b.praise.role }}</footer>
+      </blockquote>
+      {% endif %}
+
+      <p class="buy">
+        <a class="button" href="https://www.amazon.com/s?k={{ q }}&i=stripbooks" rel="noopener">Buy on Amazon</a>
+        <a class="button button-quiet" href="https://www.barnesandnoble.com/s/{{ q }}" rel="noopener">Barnes &amp; Noble</a>
+        {% if b.price %}<a class="button-link" href="/contact/?subject={{ ('Signed copy of ' ~ b.title) | urlencode }}">Ask for a signed copy</a>{% endif %}
+      </p>
+
+      <dl class="book-details">
+        {% for row in b.details %}<div><dt>{{ row[0] }}</dt><dd>{{ row[1] }}</dd></div>{% endfor %}
+      </dl>
+
+      {% if b.excerpt %}
+      <details class="excerpt">
+        <summary>Read an excerpt</summary>
+        <div class="excerpt-body">{% for p in b.excerpt %}<p>{{ p }}</p>{% endfor %}</div>
+      </details>
+      {% endif %}
+
+      {% if b.sample_poems %}
+      <details class="excerpt">
+        <summary>Read sample poems</summary>
+        <div class="excerpt-body sample-poems">
+          {% for poem in b.sample_poems %}
+          <section>
+            <h3>{{ poem.title }}</h3>
+            {% for st in poem.stanzas %}<p class="verse-stanza">{{ st | join('<br>' | safe) }}</p>{% endfor %}
+          </section>
+          {% endfor %}
+          <p>To see a sampling of the photographs, visit the <a href="/photography/">photography page</a>.</p>
+        </div>
+      </details>
+      {% endif %}
+      {% if b.sample_quotes %}
+      <div class="sample-quotes">
+        {% for sq in b.sample_quotes %}<blockquote><p>{{ sq | join('<br>' | safe) }}</p></blockquote>{% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</article>
+{% endfor %}
+{% endblock %}

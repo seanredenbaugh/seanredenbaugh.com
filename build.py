@@ -1,0 +1,261 @@
+#!/usr/bin/env python3
+"""Builds seanredenbaugh.com into ./dist from content/, templates/ and static/.
+
+    pip install -r requirements.txt
+    python3 build.py            # build into dist/
+    python3 build.py --serve    # build, then preview at http://localhost:8000
+
+Adding things later:
+  * a journal post  -> new file in content/journal/<url-slug>.html
+  * a poem          -> new file in content/poems/<url-slug>.html
+  * a sonnet, book, photo -> edit the matching file in content/pages/
+Every file in content/journal and content/poems starts with a small header
+(title, date, ...) between --- lines, then the HTML body.
+"""
+import datetime as dt
+import html
+import re
+import shutil
+import sys
+from collections import OrderedDict
+from pathlib import Path
+from xml.sax.saxutils import escape
+
+import yaml
+from jinja2 import Environment, FileSystemLoader, select_autoescape
+from PIL import Image, ImageOps
+
+ROOT = Path(__file__).resolve().parent
+CONTENT = ROOT / "content"
+STATIC = ROOT / "static"
+DIST = ROOT / "dist"
+CACHE = ROOT / ".thumbcache"
+
+SITE = {
+    "name": "Sean Redenbaugh",
+    "url": "https://www.seanredenbaugh.com",
+    "description": "Sean Redenbaugh is an Evansville, Indiana author and poet — the novels 1000 Shades of Red, Salima Falls and Sunlight Parted — and a photographer and designer.",
+    "email": "seanredenbaugh@yahoo.com",
+    "phone": "+1 812 202 0800",
+    "phone_href": "+18122020800",
+    "location": "Evansville, Indiana",
+    "year": dt.date.today().year,
+}
+
+NAV = [
+    {"label": "Books", "href": "/my-books/"},
+    {"label": "Writing", "href": "/other-poetry/", "children": [
+        {"label": "Poetry", "href": "/other-poetry/"},
+        {"label": "Sonnets", "href": "/sonnets/"},
+        {"label": "Scripts", "href": "/scripts/"},
+    ]},
+    {"label": "Photography", "href": "/photography/"},
+    {"label": "Design", "href": "/web-design/", "children": [
+        {"label": "Web design", "href": "/web-design/"},
+        {"label": "Graphic design", "href": "/graphic-design/"},
+    ]},
+    {"label": "Journal", "href": "/blog/"},
+    {"label": "About", "href": "/about/"},
+    {"label": "Contact", "href": "/contact/"},
+]
+
+
+# ------------------------------------------------------------------ content
+def load_doc(path):
+    raw = path.read_text()
+    m = re.match(r"^---\n(.*?)\n---\n(.*)$", raw, re.S)
+    meta = yaml.safe_load(m.group(1)) if m else {}
+    body = m.group(2) if m else raw
+    meta["slug"] = path.stem
+    meta["body"] = body.strip()
+    meta["date"] = dt.date.fromisoformat(str(meta["date"]))
+    meta["url"] = f"/{path.stem}/"
+    return meta
+
+
+def load_yaml(name):
+    return yaml.safe_load((CONTENT / "pages" / name).read_text())
+
+
+def plain(h, n=None):
+    t = re.sub(r"<[^>]+>", " ", h or "")
+    t = html.unescape(re.sub(r"\s+", " ", t)).strip()
+    if n and len(t) > n:
+        t = t[:n].rsplit(" ", 1)[0].rstrip(",.;:—–-") + "…"
+    return t
+
+
+journal = sorted((load_doc(p) for p in (CONTENT / "journal").glob("*.html")), key=lambda d: d["date"], reverse=True)
+poems = sorted((load_doc(p) for p in (CONTENT / "poems").glob("*.html")), key=lambda d: (d["date"], d["title"]), reverse=True)
+
+for d in journal:
+    d["summary"] = plain(d["body"], 190)
+    # don't show the featured image twice if the post body already contains it
+    if d.get("image") and d["image"] in d["body"]:
+        d["image_in_body"] = True
+for d in poems:
+    first = re.split(r"<br\s*/?>|</p>", d["body"])[0]
+    d["first_line"] = plain(first)
+
+
+def by_year(items):
+    groups = OrderedDict()
+    for it in items:
+        groups.setdefault(it["date"].year, []).append(it)
+    return groups
+
+
+# ------------------------------------------------------------------ images
+def thumb(src, width=900):
+    """Return a resized WebP copy of an uploaded image (made once, cached)."""
+    if not src or not src.startswith("/wp-content/uploads/") or src.lower().endswith((".pdf", ".svg", ".gif")):
+        return src
+    orig = STATIC / src.lstrip("/")
+    if not orig.exists():
+        return src
+    rel = Path(src.lstrip("/")).with_suffix("")
+    out_rel = Path("thumbs") / f"{rel}-{width}.webp"
+    cached = CACHE / out_rel
+    if not cached.exists() or cached.stat().st_mtime < orig.stat().st_mtime:
+        cached.parent.mkdir(parents=True, exist_ok=True)
+        im = ImageOps.exif_transpose(Image.open(orig))
+        im = im.convert("RGBA" if im.mode in ("RGBA", "LA", "P") else "RGB")
+        if im.width > width:
+            im = im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
+        im.save(cached, "WEBP", quality=80, method=6)
+    dest = DIST / out_rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    if not dest.exists():
+        shutil.copy2(cached, dest)
+    return "/" + out_rel.as_posix()
+
+
+def img_size(src):
+    try:
+        with Image.open(STATIC / src.lstrip("/")) as im:
+            return ImageOps.exif_transpose(im).size
+    except Exception:
+        return (4, 3)
+
+
+def responsive_images(body):
+    """Point <img> tags in post bodies at resized copies and add width/height."""
+    def rep(m):
+        tag = m.group(0)
+        s = re.search(r'src="([^"]+)"', tag)
+        if not s or not s.group(1).startswith("/wp-content/uploads/"):
+            return tag
+        src = s.group(1)
+        w, h = img_size(src)
+        new = tag.replace(f'src="{src}"', f'src="{thumb(src, 1200)}" width="{w}" height="{h}"')
+        return new
+    return re.sub(r"<img\b[^>]*>", rep, body)
+
+
+# ------------------------------------------------------------------ render
+env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape(["html"]))
+env.globals.update(site=SITE, nav=NAV, thumb=thumb, img_size=img_size)
+env.filters["longdate"] = lambda d: f"{d:%B} {d.day}, {d.year}"
+env.filters["plain"] = plain
+
+
+def render(template, url, **ctx):
+    ctx.setdefault("url", url)
+    out = env.get_template(template).render(**ctx)
+    path = DIST / url.lstrip("/")
+    if url.endswith("/"):
+        path = path / "index.html"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(out)
+    pages_built.append(url)
+
+
+def build():
+    global pages_built
+    pages_built = []
+    if DIST.exists():
+        shutil.rmtree(DIST)
+    shutil.copytree(STATIC, DIST)
+
+    books = load_yaml("books.yml")["books"]
+    home = load_yaml("home.yml")
+    sonnets = load_yaml("sonnets.yml")
+    sonnets["sonnets"].sort(key=lambda s: s["number"], reverse=True)
+    photography = load_yaml("photography.yml")
+    about = load_yaml("about.yml")
+
+    for d in journal:
+        d["body_html"] = responsive_images(d["body"])
+
+    render("home.html", "/", books=books, home=home, journal=journal[:3],
+           poem=poems[0], poem_pool=[p for p in poems if 8 <= p["body"].count("<br") + p["body"].count("<p>") <= 24][:60],
+           photos=photography["photos"], poem_count=len(poems))
+    render("books.html", "/my-books/", books=books, title="Books",
+           description="Novels, poetry and photography by Sean Redenbaugh: 1000 Shades of Red, Salima Falls, Sunlight Parted and Distant Lands of Solitude.")
+    render("sonnets.html", "/sonnets/", data=sonnets, title="Sonnets",
+           description="Sonnets in iambic pentameter by Sean Redenbaugh.")
+    render("poetry.html", "/other-poetry/", groups=by_year(poems), count=len(poems), title="Poetry",
+           description=f"{len(poems)} poems by Sean Redenbaugh, written between {poems[-1]['date'].year} and {poems[0]['date'].year}.")
+    render("scripts.html", "/scripts/", title="Scripts",
+           description="Screenplays by Sean Redenbaugh, including the feature-film adaptation of Sunlight Parted.")
+    render("photography.html", "/photography/", data=photography, title="Photography",
+           description="Nature photography by Sean Redenbaugh — sunrises, water, light and the quiet corners of Indiana and beyond.")
+    render("gallery.html", "/web-design/", items=load_yaml("web-design.yml")["items"], title="Web design",
+           lede="Websites I’ve designed and built over twenty-some years of web work.",
+           description="Websites designed and built by Sean Redenbaugh.")
+    render("gallery.html", "/graphic-design/", items=load_yaml("graphic-design.yml")["items"], title="Graphic design",
+           lede="Logos, billboards, ads, book covers and other graphics.",
+           description="Logos, billboards, ads and book covers designed by Sean Redenbaugh.")
+    render("about.html", "/about/", data=about, title="About",
+           description="About Sean Redenbaugh — writer, poet, photographer, designer and IU grad living in Evansville, Indiana.")
+    render("contact.html", "/contact/", title="Contact",
+           description="Get in touch with Sean Redenbaugh about books, writing, web design or graphic design.")
+    render("blog.html", "/blog/", groups=by_year(journal), title="Journal",
+           description="Sean Redenbaugh’s writing journal: book news, signings, progress notes, music and home projects.")
+
+    for i, d in enumerate(journal):
+        render("post.html", d["url"], post=d, title=d["title"], description=d["summary"],
+               newer=journal[i - 1] if i > 0 else None, older=journal[i + 1] if i + 1 < len(journal) else None,
+               og_image=d.get("image"))
+    for i, d in enumerate(poems):
+        render("poem.html", d["url"], post=d, title=d["title"], description=plain(d["body"], 160),
+               newer=poems[i - 1] if i > 0 else None, older=poems[i + 1] if i + 1 < len(poems) else None)
+
+    render("404.html", "/404.html", title="Page not found")
+    write_feed()
+    write_sitemap()
+    print(f"Built {len(pages_built)} pages into {DIST.relative_to(ROOT)}/")
+
+
+def write_feed():
+    items = []
+    for d in sorted(journal + poems, key=lambda x: x["date"], reverse=True)[:30]:
+        items.append(
+            f"<item><title>{escape(d['title'])}</title><link>{SITE['url']}{d['url']}</link>"
+            f"<guid>{SITE['url']}{d['url']}</guid>"
+            f"<pubDate>{dt.datetime.combine(d['date'], dt.time(12)).strftime('%a, %d %b %Y %H:%M:%S +0000')}</pubDate>"
+            f"<description>{escape(plain(d['body'], 400))}</description></item>"
+        )
+    (DIST / "feed.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel>'
+        f"<title>{SITE['name']}</title><link>{SITE['url']}/</link><description>{escape(SITE['description'])}</description>"
+        + "".join(items) + "</channel></rss>"
+    )
+
+
+def write_sitemap():
+    urls = [u for u in pages_built if u.endswith("/")]
+    body = "".join(f"<url><loc>{SITE['url']}{u}</loc></url>" for u in urls)
+    (DIST / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + body + "</urlset>"
+    )
+
+
+if __name__ == "__main__":
+    build()
+    if "--serve" in sys.argv:
+        import functools
+        import http.server
+        handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(DIST))
+        print("Preview at http://localhost:8000  (Ctrl+C to stop)")
+        http.server.ThreadingHTTPServer(("", 8000), handler).serve_forever()

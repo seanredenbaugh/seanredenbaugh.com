@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="wrap about">
+  <div class="about-portrait">
+    <img src="{{ thumb(data.portrait, 800) }}" alt="Sean Redenbaugh in sunglasses" width="569" height="380">
+    <blockquote class="about-quote"><p>{{ data.quote.text }}</p><footer>{{ data.quote.by }}</footer></blockquote>
+  </div>
+  <div class="about-body">
+    <h1>About me</h1>
+    <div class="prose">{% for p in data.intro %}{{ p | safe }}{% endfor %}</div>
+    <div class="about-sections">
+      {% for s in data.sections %}
+      <details{% if loop.index <= 2 %} open{% endif %}>
+        <summary>{{ s.title }}</summary>
+        <div class="prose">{{ s.html | safe }}</div>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% set page_title = (title ~ " | " ~ site.name) if title else (site.name ~ " — Author, Poet, Photographer & Designer") %}
+<title>{{ page_title }}</title>
+<meta name="description" content="{{ description or site.description }}">
+<link rel="canonical" href="{{ site.url }}{{ url }}">
+<meta name="theme-color" content="#1c2029">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{{ title or site.name }}">
+<meta property="og:description" content="{{ description or site.description }}">
+<meta property="og:url" content="{{ site.url }}{{ url }}">
+<meta property="og:type" content="{{ 'article' if post else 'website' }}">
+<meta property="og:image" content="{{ site.url }}{{ og_image or '/wp-content/uploads/1000Cover.jpg' }}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="/feed.xml">
+<link rel="preload" href="/fonts/eb-garamond-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/bodoni-moda-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/site.css?v=1">
+{% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a class="wordmark" href="/">Sean Redenbaugh</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span class="visually-hidden">Menu</span><span class="bars" aria-hidden="true"></span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>
+      {% for item in nav %}
+        {% set active = url.startswith(item.href) or (item.children and (item.children | selectattr('href', 'equalto', url) | list)) %}
+        <li class="{{ 'has-sub' if item.children }}{{ ' active' if active }}">
+          <a href="{{ item.href }}"{% if url == item.href %} aria-current="page"{% endif %}>{{ item.label }}</a>
+          {% if item.children %}
+          <ul class="sub">
+            {% for c in item.children %}<li><a href="{{ c.href }}"{% if url == c.href %} aria-current="page"{% endif %}>{{ c.label }}</a></li>{% endfor %}
+          </ul>
+          {% endif %}
+        </li>
+      {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+{% block main %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-sign">
+      <p class="footer-name">Sean Redenbaugh</p>
+      <p class="footer-line">Life’s journey is too vast for me alone,<br>in but a thousand lifetimes to perceive.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="/my-books/">Books</a>
+      <a href="/other-poetry/">Poetry</a>
+      <a href="/sonnets/">Sonnets</a>
+      <a href="/scripts/">Scripts</a>
+      <a href="/photography/">Photography</a>
+      <a href="/web-design/">Web design</a>
+      <a href="/graphic-design/">Graphic design</a>
+      <a href="/blog/">Journal</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <div class="footer-contact">
+      <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+      <a href="tel:{{ site.phone_href }}">{{ site.phone }}</a>
+      <span>{{ site.location }}</span>
+    </div>
+  </div>
+  <p class="wrap copyright">© {{ site.year }} Sean Redenbaugh. All writing and photographs are his own.</p>
+</footer>
+
+<dialog class="lightbox" aria-label="Image viewer">
+  <button class="lb-close" aria-label="Close">×</button>
+  <button class="lb-prev" aria-label="Previous image">‹</button>
+  <figure><img alt=""><figcaption></figcaption></figure>
+  <button class="lb-next" aria-label="Next image">›</button>
+</dialog>
+<script src="/js/site.js?v=1" defer></script>
+</body>
+</html>

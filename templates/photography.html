@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block body_class %}dark-page{% endblock %}
+{% block main %}
+<header class="page-head">
+  <div class="wrap photo-head">
+    <div>
+      <h1>Photography</h1>
+      <p class="lede-small">{{ data.intro }}</p>
+    </div>
+    <div class="photo-quotes">
+      {% for q in data.quotes %}
+      <blockquote><p>{{ q.text }}</p><footer>{{ q.by }}</footer></blockquote>
+      {% endfor %}
+    </div>
+  </div>
+</header>
+<div class="wrap-wide">
+  <ul class="gallery gallery-photos">
+    {% for ph in data.photos %}
+    {% set sz = img_size(ph.src) %}
+    <li style="--r: {{ '%.3f' | format(sz[0] / sz[1]) }}; flex-grow: {{ (sz[0] / sz[1] * 100) | round(0, 'floor') | int }}">
+      <a href="{{ thumb(ph.src, 2000) }}" data-lightbox data-caption="{{ ph.title }}{% if ph.number %} ({{ ph.number }}){% endif %}">
+        <img src="{{ thumb(ph.src, 700) }}" alt="{{ ph.title }}" loading="lazy" width="{{ sz[0] }}" height="{{ sz[1] }}">
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
