@@ -55,7 +55,7 @@
       {% for p in poem_pool %}
       <article class="poem-card"{% if not loop.first %} hidden{% endif %}>
         <h3><a href="{{ p.url }}">{{ p.title }}</a></h3>
-        <div class="verse">{{ p.body | safe }}</div>
+        <div class="verse">{{ p.body | verse | safe }}</div>
         <p class="poem-date">{{ p.date | longdate }}</p>
       </article>
       {% endfor %}

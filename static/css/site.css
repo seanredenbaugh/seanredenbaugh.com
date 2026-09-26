@@ -210,6 +210,7 @@ blockquote { margin: 0; }
 .poem-page, .post-page { padding-top: clamp(40px, 7vw, 90px); padding-bottom: 60px; }
 .verse { font-size: 1.22em; line-height: 1.55; }
 .verse p, .verse-stanza { margin: 0 0 1.1em; }
+.verse .vl { display: block; padding-left: 1.4em; text-indent: -1.4em; }
 .poem-page h1 { margin-bottom: .8em; }
 .poem-date { color: var(--muted); font-size: 1rem; font-style: italic; }
 .prose { max-width: 38em; }
@@ -354,3 +355,10 @@ blockquote { margin: 0; }
 .footer-contact { display: grid; gap: 6px; align-content: start; }
 .copyright { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.08); font-size: .92rem; }
 @media (max-width: 760px) { .footer-inner { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------ phones: keep verse lines whole */
+@media (max-width: 520px) {
+  .verse, .sonnet .verse-stanza, .poem-card .verse { font-size: 1.02em; }
+  .couplet { padding-left: 1em; }
+  .prose td:first-child { width: 38%; }
+}

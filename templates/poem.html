@@ -4,7 +4,7 @@
 <article class="wrap narrow poem-page">
   <p class="crumb"><a href="/other-poetry/">Poetry</a></p>
   <h1>{{ post.title }}</h1>
-  <div class="verse">{{ post.body | safe }}</div>
+  <div class="verse">{{ post.body | verse | safe }}</div>
   <p class="poem-date"><time datetime="{{ post.date }}">{{ post.date | longdate }}</time></p>
   <nav class="pager" aria-label="More poems">
     {% if older %}<a class="pager-prev" href="{{ older.url }}"><span>Previous poem</span>{{ older.title }}</a>{% endif %}

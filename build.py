@@ -152,6 +152,17 @@ env.filters["longdate"] = lambda d: f"{d:%B} {d.day}, {d.year}"
 env.filters["plain"] = plain
 
 
+def verse_lines(body):
+    """Wrap each line of a poem so a line too long for a phone wraps with a hanging indent."""
+    def para(m):
+        lines = re.split(r"<br\s*/?>\s*", m.group(1))
+        return "<p>" + "".join(f'<span class="vl">{l.strip()}</span>' for l in lines if l.strip()) + "</p>"
+    return re.sub(r"<p>(.*?)</p>", para, body, flags=re.S)
+
+
+env.filters["verse"] = verse_lines
+
+
 def external_links(page):
     """Open links to other websites in a new tab."""
     def rep(m):
