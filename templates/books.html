@@ -35,7 +35,7 @@
         {% if b.barnes_noble %}<a class="button button-quiet" href="{{ b.barnes_noble }}">Barnes &amp; Noble</a>{% endif %}
         {% if b.price %}<a class="button-link" href="/contact/?subject={{ ('Signed copy of ' ~ b.title) | urlencode }}">Ask for a signed copy</a>{% endif %}
       </p>
-      {% if author_page %}<p class="author-page-link"><a href="{{ author_page }}">All my books on my Amazon author page</a></p>{% endif %}
+      {% if author_page or bn_author_page %}<p class="author-page-link">All my books on {% if author_page %}<a href="{{ author_page }}">Amazon</a>{% endif %}{% if author_page and bn_author_page %} and {% endif %}{% if bn_author_page %}<a href="{{ bn_author_page }}">Barnes &amp; Noble</a>{% endif %}</p>{% endif %}
 
       <dl class="book-details">
         {% for row in b.details %}<div><dt>{{ row[0] }}</dt><dd>{{ row[1] }}</dd></div>{% endfor %}

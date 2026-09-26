@@ -205,7 +205,7 @@ def build():
     render("home.html", "/", books=books,
            poem=poems[0], poem_pool=[p for p in poems if 8 <= p["body"].count("<br") + p["body"].count("<p>") <= 24][:60],
            photos=photography["photos"], poem_count=len(poems))
-    render("books.html", "/my-books/", books=books, author_page=books_data.get("amazon_author_page"), title="Books",
+    render("books.html", "/my-books/", books=books, author_page=books_data.get("amazon_author_page"), bn_author_page=books_data.get("barnes_noble_author_page"), title="Books",
            description="Novels, poetry and photography by Sean Redenbaugh: 1000 Shades of Red, Salima Falls, Sunlight Parted and Distant Lands of Solitude.")
     render("sonnets.html", "/sonnets/", data=sonnets, title="Sonnets",
            description="Sonnets in iambic pentameter by Sean Redenbaugh.")
