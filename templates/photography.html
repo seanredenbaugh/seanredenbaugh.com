@@ -5,7 +5,7 @@
   <div class="wrap photo-head">
     <h1>Photography</h1>
     {% if data.intro %}<p class="lede-small">{{ data.intro }}</p>{% endif %}
-    {% for q in data.quotes | sort(attribute='text_len') %}
+    {% for q in data.quotes | sort(attribute='text_len', reverse=True) %}
     <blockquote class="photo-quote"><p>{{ q.text }}</p><footer>{{ q.by }}</footer></blockquote>
     {% endfor %}
   </div>
