@@ -165,13 +165,12 @@ def build():
     shutil.copytree(STATIC, DIST)
 
     books = load_yaml("books.yml")["books"]
-    home = load_yaml("home.yml")
     sonnets = load_yaml("sonnets.yml")
     sonnets["sonnets"].sort(key=lambda s: s["number"], reverse=True)
     photography = load_yaml("photography.yml")
     about = load_yaml("about.yml")
 
-    render("home.html", "/", books=books, home=home,
+    render("home.html", "/", books=books,
            poem=poems[0], poem_pool=[p for p in poems if 8 <= p["body"].count("<br") + p["body"].count("<p>") <= 24][:60],
            photos=photography["photos"], poem_count=len(poems))
     render("books.html", "/my-books/", books=books, title="Books",

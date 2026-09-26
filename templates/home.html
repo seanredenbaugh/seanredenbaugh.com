@@ -47,22 +47,6 @@
 </section>
 
 
-<section class="essence">
-  <div class="wrap essence-inner">
-    <div class="essence-text">
-      <h2 class="section-title">The essence</h2>
-      <blockquote class="prompt">
-        <p>{{ home.prompt.text }}</p>
-        <footer>{{ home.prompt.by }}</footer>
-      </blockquote>
-      {% for p in home.essay %}<p>{{ p | safe }}</p>{% endfor %}
-    </div>
-    <aside class="essence-songs" aria-label="Songs that feel like me">
-      <p class="songs-note">The songs that feel very… me.</p>
-      {% for id in home.songs %}<div class="yt" data-id="{{ id }}"></div>{% endfor %}
-    </aside>
-  </div>
-</section>
 
 <section class="poem-feature">
   <div class="wrap narrow">
