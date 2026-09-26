@@ -152,9 +152,21 @@ env.filters["longdate"] = lambda d: f"{d:%B} {d.day}, {d.year}"
 env.filters["plain"] = plain
 
 
+def external_links(page):
+    """Open links to other websites in a new tab."""
+    def rep(m):
+        tag = m.group(0)
+        href = re.search(r'href="([^"]*)"', tag).group(1)
+        if not re.match(r"https?://", href) or re.match(r"https?://(www\.)?seanredenbaugh\.com", href) or "target=" in tag:
+            return tag
+        tag = re.sub(r'\srel="[^"]*"', "", tag)
+        return tag[:-1] + ' target="_blank" rel="noopener">'
+    return re.sub(r"<a\b[^>]*\bhref=\"[^\"]*\"[^>]*>", rep, page)
+
+
 def render(template, url, **ctx):
     ctx.setdefault("url", url)
-    out = env.get_template(template).render(**ctx)
+    out = external_links(env.get_template(template).render(**ctx))
     path = DIST / url.lstrip("/")
     if url.endswith("/"):
         path = path / "index.html"
