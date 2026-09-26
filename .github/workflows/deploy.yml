@@ -9,11 +9,6 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      clean:
-        description: "Wipe the server folder and upload everything fresh (fixes a stuck upload)"
-        type: boolean
-        default: false
 
 concurrency:
   group: deploy
@@ -42,15 +37,24 @@ jobs:
       - run: python build.py
 
       - name: Upload to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          local-dir: dist/
-          server-dir: ./
-          timeout: 180000
-          # A full fresh upload runs when started by hand with "clean" ticked,
-          # or when a commit message contains [clean-deploy].
-          dangerous-clean-slate: ${{ github.event.inputs.clean == 'true' || contains(github.event.head_commit.message, '[clean-deploy]') }}
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get update -qq > /dev/null && sudo apt-get install -y -qq lftp > /dev/null
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" <<'LFTP'
+          set ftp:ssl-allow true
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate no
+          set net:timeout 60
+          set net:max-retries 4
+          set net:reconnect-interval-base 5
+          set cmd:fail-exit true
+          # 1) Make the server match dist/ exactly: upload new or resized files, delete removed ones.
+          mirror --reverse --delete --ignore-time --parallel=6 --verbose=1 dist/ ./
+          # 2) Always re-send pages, styles and scripts, since an edit can keep a file the same size.
+          mirror --reverse --parallel=6 --verbose=1 --include-glob=*.html --include-glob=*.css --include-glob=*.js --include-glob=*.xml --include-glob=*.php --include-glob=.htaccess --include-glob=*.txt --include-glob=*.svg dist/ ./
+          bye
+          LFTP
