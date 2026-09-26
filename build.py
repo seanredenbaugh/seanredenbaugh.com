@@ -8,7 +8,7 @@
 Adding things later:
   * a poem          -> new file in content/poems/<url-slug>.html
   * a sonnet, book, photo -> edit the matching file in content/pages/
-  * tagline, menu, contact details -> content/site.yml
+  * tagline, menu, email -> content/site.yml
 Every file in content/poems starts with a small header
 (title, date, ...) between --- lines, then the HTML body.
 """
@@ -39,9 +39,6 @@ SITE = {
     "footer_lines": [l for l in _settings["footer_line"].strip().splitlines() if l.strip()],
     "description": _settings["description"],
     "email": _settings["email"],
-    "phone": _settings["phone"],
-    "phone_href": "+" + re.sub(r"\D", "", _settings["phone"]),
-    "location": _settings["location"],
     "year": dt.date.today().year,
 }
 
@@ -184,7 +181,7 @@ def build():
     render("photography.html", "/photography/", data=photography, title="Photography",
            description="Nature photography by Sean Redenbaugh — sunrises, water, light and the quiet corners of Indiana and beyond.")
     render("about.html", "/about/", data=about, title="About",
-           description="About Sean Redenbaugh — writer, poet, photographer and IU grad living in Evansville, Indiana.")
+           description="About Sean Redenbaugh — writer, poet, photographer and Indiana University grad.")
     render("contact.html", "/contact/", title="Contact",
            description="Get in touch with Sean Redenbaugh about books and writing.")
 

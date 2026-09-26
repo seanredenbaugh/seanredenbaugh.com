@@ -10,7 +10,7 @@ a small Python script and hosted on Hostinger. No WordPress, no database, no plu
 content/            what the site says
   poems/            one file per poem           -> /<file-name>/
   pages/            books, sonnets, photography, about, home page text (YAML)
-  site.yml          tagline, menu, footer, contact details
+  site.yml          tagline, menu, footer, email
 templates/          the page layouts (Jinja2 HTML)
 static/             copied as-is: css, js, fonts, images (wp-content/uploads), contact.php, .htaccess
 build.py            turns all of the above into dist/
@@ -20,7 +20,7 @@ tools/              the one-time WordPress importer (kept for reference)
 
 ## Making changes
 
-**Tagline, menu, footer lines, phone and email** all live in one file: `content/site.yml`.
+**Tagline, menu, footer lines and email** all live in one file: `content/site.yml`.
 On github.com, open it, click the pencil icon, change the text, and click **Commit changes**.
 The site updates itself in a few minutes.
 
