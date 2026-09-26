@@ -32,7 +32,7 @@
 
       <p class="buy">
         <a class="button" href="{{ b.amazon or ('https://www.amazon.com/s?k=' ~ q ~ '&i=stripbooks') }}">Buy on Amazon</a>
-        <a class="button button-quiet" href="https://www.barnesandnoble.com/s/{{ q }}" rel="noopener">Barnes &amp; Noble</a>
+        {% if b.barnes_noble %}<a class="button button-quiet" href="{{ b.barnes_noble }}">Barnes &amp; Noble</a>{% endif %}
         {% if b.price %}<a class="button-link" href="/contact/?subject={{ ('Signed copy of ' ~ b.title) | urlencode }}">Ask for a signed copy</a>{% endif %}
       </p>
       {% if author_page %}<p class="author-page-link"><a href="{{ author_page }}">All my books on my Amazon author page</a></p>{% endif %}

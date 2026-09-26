@@ -1,4 +1,4 @@
-# Books page. "amazon" is each book's Amazon link; "amazon_author_page" appears under every book.
+# Books page. "amazon" and "barnes_noble" are each book's store links; "amazon_author_page" appears under every book.
 books:
 - slug: 1000-shades-of-red
   title: 1000 Shades of Red
@@ -24,6 +24,7 @@ books:
     earth and no longer a part of themselves. When the spaces between dissipated. Dreams and hopes exploded on impact. Books and music scattered on the pavement. Love and romance liquified. Sex and pain and memories drying in the sun. The past, present, and future in a thousand shades of red painting the sidewalk. Oozing from a former something. A current nothing. A memory. Surrounded by the screams of others. Maybe that should be our house mural. That would surely make people think. But their demise makes no sense to me. A test or a class or a grade is a blip on the radar. A dot on an infinite line. A commercial break. A meaningless, forgettable thing. A speck on the vast mural of life! It pales next to friendship! It dissolves next to Love!
   - Thinking about it all makes me lose my appetite for my next class. Statistical Probabilities. Probably, pun intended, my least favorite class ever. But I can’t do it today. I can’t sit through another commercial right now. So I walk back down the steps of Ballantine Hall, across the grassy area, and sit at the base of a tree outside of Woodburn Hall across the way. No one has ever jumped off of this one. It’s not tall enough. It would only add pain to pain.
   amazon: https://www.amazon.com/dp/B0DWZM3X5F
+  barnes_noble: https://www.barnesandnoble.com/w/1000-shades-of-red-sean-michael-redenbaugh/1146985241?ean=9798348523343
 - slug: salima-falls
   title: Salima Falls
   kind: Literary Fiction Novel
@@ -48,6 +49,7 @@ books:
   - He opened his eyes and stared one more time at the corn in front of him.
   - “I believe,” he said. Then he closed his eyes and slammed his foot on the gas.
   amazon: https://www.amazon.com/dp/0692850821
+  barnes_noble: https://www.barnesandnoble.com/w/salima-falls-sean-michael-redenbaugh/1125914023?ean=9780692850824
 - slug: sunlight-parted
   title: Sunlight Parted
   kind: Literary Fiction Novel
@@ -78,6 +80,7 @@ books:
     by: Cara Lockwood
     role: USA Today best-selling author of 10 books, professional editor
   amazon: https://www.amazon.com/dp/0692377646
+  barnes_noble: https://www.barnesandnoble.com/w/sunlight-parted-sean-michael-redenbaugh/1121134767?ean=9780692377642
 - slug: distant-lands-of-solitude
   title: Distant Lands of Solitude
   kind: Poetry & Photography Collection
@@ -172,4 +175,5 @@ books:
     by: Karl Mayer
     role: Book collector & avid reader
   amazon: https://www.amazon.com/dp/1425963765
+  barnes_noble: https://www.barnesandnoble.com/w/distant-lands-of-solitude-sean-redenbaugh/1141061279?ean=9781425963767
 amazon_author_page: https://www.amazon.com/stores/Sean-Michael-Redenbaugh/author/B00TYXXZQU/allbooks
