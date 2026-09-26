@@ -36,15 +36,8 @@ menu:
         link: /scripts/
   - label: Photography
     link: /photography/
-  - label: Design
+  - label: Web design
     link: /web-design/
-    children:
-      - label: Web design
-        link: /web-design/
-      - label: Graphic design
-        link: /graphic-design/
-  - label: Journal
-    link: /blog/
   - label: About
     link: /about/
   - label: Contact

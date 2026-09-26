@@ -19,10 +19,14 @@ RewriteRule ^product/.*$ /my-books/ [L,R=301]
 
 # Old WordPress archives
 RewriteRule ^category/poems/?.*$ /other-poetry/ [L,R=301]
-RewriteRule ^(category|tag)/.*$ /blog/ [L,R=301]
+RewriteRule ^(category|tag)/.*$ / [L,R=301]
 RewriteRule ^author/.*$ /about/ [L,R=301]
-RewriteRule ^[0-9]{4}(/[0-9]{2}(/[0-9]{2})?)?/?$ /blog/ [L,R=301]
-RewriteRule ^blog/page/.*$ /blog/ [L,R=301]
+RewriteRule ^[0-9]{4}(/[0-9]{2}(/[0-9]{2})?)?/?$ / [L,R=301]
+RewriteRule ^blog(/.*)?$ / [L,R=301]
+
+# Removed pages: graphic design -> web design; old journal posts -> home page
+RewriteRule ^graphic-design/?$ /web-design/ [L,R=301]
+RewriteRule ^(2nd-edition-on-the-way|2nd-round-of-edits-received|amazing-review|amazon-author-central-page|and-so-it-begins|blackmill-progress|blogtalk-radio-interview|book-now-for-sale-here|book-signing-a-success|book-signing-dates|book-signing-scheduled-for-march-7th|chapter-1-commences|chapter-1-complete|chapter-9-complete|chapter-two-complete|danville-book-world-signing|danville-commercial-news-story|deciding-to-self-publish|evansville-book-signing-success|evansville-living-magazine|finished-rough-draft-of-novel|first-case|fortune-soul|ghosts-n-stuff-nero-remix|glowing-review|good-news-from-editor-of-sunlight-parted|got-a-hard-copy|harry-potter-the-7-books|holy-smokes|home-library-complete|hot-off-the-press|i-have-started-a-second-book|i-now-have-an-editor-for-sunlight-parted|industrial-rustic-lamp|its-finally-here|kindle-edition-available|kindle-version-now-available|most-honest-two-minutes|motorcycle-drive-by|my-new-inspiration-piece|new-business-cards|new-pipe-wine-rack|new-seanredenbaugh-com-website-complete|now-we-are-free-gladiator|ordered-some-business-cards|print-copies-on-the-way|progress-update|progress|promo-material-on-the-way|radio-interview-link|salima-falls-fully-drafted|salima-falls-jacket-complete|serendipity-destiny|sunlight-parted-manuscript-complete|thanks-courier-press-in-evansville|the-books-arrived|thx-also-to-warrick-publishing|time-to-relax|tired-hands|todays-writing-playlist|typos-corrections|us-as-a-painting|working-on-the-screenplay|writers-should-be-runners)/?$ / [L,R=301]
 RewriteRule ^home-layout-1/?$ / [L,R=301]
 RewriteRule ^(feed|comments/feed)/?$ /feed.xml [L,R=301]
 RewriteRule ^(wp-admin|wp-login\.php|xmlrpc\.php|wp-json)(/.*)?$ - [G,L]

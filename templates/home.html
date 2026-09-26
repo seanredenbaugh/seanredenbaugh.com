@@ -54,7 +54,6 @@
       <div><dt><a href="/sonnets/">Poetry &amp; sonnets</a></dt><dd>Over a hundred and forty poems, and a run of sonnets in iambic pentameter.</dd></div>
       <div><dt><a href="/photography/">Nature photography</a></dt><dd>Light, water and open country, collected in the photo and poetry book Distant Lands of Solitude.</dd></div>
       <div><dt><a href="/web-design/">Web design</a></dt><dd>More than twenty years of building websites.</dd></div>
-      <div><dt><a href="/graphic-design/">Graphic design</a></dt><dd>Billboards, ads, logos, book covers and more.</dd></div>
       <div><dt><a href="/contact/">Software</a></dt><dd>Manufacturing, business and web software.</dd></div>
     </dl>
   </div>
@@ -104,21 +103,4 @@
   </ul>
 </section>
 
-<section class="journal-teaser">
-  <div class="wrap">
-    <h2 class="section-title"><a href="/blog/">From the journal</a></h2>
-    <ul class="entry-list">
-      {% for d in journal %}
-      <li class="entry">
-        {% if d.image %}<a class="entry-img" href="{{ d.url }}" tabindex="-1" aria-hidden="true"><img src="{{ thumb(d.image, 600) }}" alt="" loading="lazy"></a>{% endif %}
-        <div>
-          <h3><a href="{{ d.url }}">{{ d.title }}</a></h3>
-          <p class="entry-date"><time datetime="{{ d.date }}">{{ d.date | longdate }}</time></p>
-          <p>{{ d.summary }}</p>
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-</section>
 {% endblock %}

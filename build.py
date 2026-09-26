@@ -6,11 +6,10 @@
     python3 build.py --serve    # build, then preview at http://localhost:8000
 
 Adding things later:
-  * a journal post  -> new file in content/journal/<url-slug>.html
   * a poem          -> new file in content/poems/<url-slug>.html
   * a sonnet, book, photo -> edit the matching file in content/pages/
   * tagline, menu, contact details -> content/site.yml
-Every file in content/journal and content/poems starts with a small header
+Every file in content/poems starts with a small header
 (title, date, ...) between --- lines, then the HTML body.
 """
 import datetime as dt
@@ -79,14 +78,8 @@ def plain(h, n=None):
     return t
 
 
-journal = sorted((load_doc(p) for p in (CONTENT / "journal").glob("*.html")), key=lambda d: d["date"], reverse=True)
 poems = sorted((load_doc(p) for p in (CONTENT / "poems").glob("*.html")), key=lambda d: (d["date"], d["title"]), reverse=True)
 
-for d in journal:
-    d["summary"] = plain(d["body"], 190)
-    # don't show the featured image twice if the post body already contains it
-    if d.get("image") and d["image"] in d["body"]:
-        d["image_in_body"] = True
 for d in poems:
     first = re.split(r"<br\s*/?>|</p>", d["body"])[0]
     d["first_line"] = plain(first)
@@ -178,10 +171,7 @@ def build():
     photography = load_yaml("photography.yml")
     about = load_yaml("about.yml")
 
-    for d in journal:
-        d["body_html"] = responsive_images(d["body"])
-
-    render("home.html", "/", books=books, home=home, journal=journal[:3],
+    render("home.html", "/", books=books, home=home,
            poem=poems[0], poem_pool=[p for p in poems if 8 <= p["body"].count("<br") + p["body"].count("<p>") <= 24][:60],
            photos=photography["photos"], poem_count=len(poems))
     render("books.html", "/my-books/", books=books, title="Books",
@@ -197,20 +187,11 @@ def build():
     render("gallery.html", "/web-design/", items=load_yaml("web-design.yml")["items"], title="Web design",
            lede="Websites I’ve designed and built over twenty-some years of web work.",
            description="Websites designed and built by Sean Redenbaugh.")
-    render("gallery.html", "/graphic-design/", items=load_yaml("graphic-design.yml")["items"], title="Graphic design",
-           lede="Logos, billboards, ads, book covers and other graphics.",
-           description="Logos, billboards, ads and book covers designed by Sean Redenbaugh.")
     render("about.html", "/about/", data=about, title="About",
            description="About Sean Redenbaugh — writer, poet, photographer, designer and IU grad living in Evansville, Indiana.")
     render("contact.html", "/contact/", title="Contact",
-           description="Get in touch with Sean Redenbaugh about books, writing, web design or graphic design.")
-    render("blog.html", "/blog/", groups=by_year(journal), title="Journal",
-           description="Sean Redenbaugh’s writing journal: book news, signings, progress notes, music and home projects.")
+           description="Get in touch with Sean Redenbaugh about books, writing or web design.")
 
-    for i, d in enumerate(journal):
-        render("post.html", d["url"], post=d, title=d["title"], description=d["summary"],
-               newer=journal[i - 1] if i > 0 else None, older=journal[i + 1] if i + 1 < len(journal) else None,
-               og_image=d.get("image"))
     for i, d in enumerate(poems):
         render("poem.html", d["url"], post=d, title=d["title"], description=plain(d["body"], 160),
                newer=poems[i - 1] if i > 0 else None, older=poems[i + 1] if i + 1 < len(poems) else None)
@@ -223,7 +204,7 @@ def build():
 
 def write_feed():
     items = []
-    for d in sorted(journal + poems, key=lambda x: x["date"], reverse=True)[:30]:
+    for d in poems[:30]:
         items.append(
             f"<item><title>{escape(d['title'])}</title><link>{SITE['url']}{d['url']}</link>"
             f"<guid>{SITE['url']}{d['url']}</guid>"

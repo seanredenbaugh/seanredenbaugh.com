@@ -1,6 +1,6 @@
 # seanredenbaugh.com
 
-The website of Sean Redenbaugh — books, poetry, sonnets, scripts, photography, design, and the journal.
+The website of Sean Redenbaugh — books, poetry, sonnets, scripts, photography and web design.
 It's a plain static site (HTML, CSS, a little JavaScript, and one PHP file for the contact form), built by
 a small Python script and hosted on Hostinger. No WordPress, no database, no plugins to update.
 
@@ -8,9 +8,9 @@ a small Python script and hosted on Hostinger. No WordPress, no database, no plu
 
 ```
 content/            what the site says
-  journal/          one file per journal post   -> /<file-name>/
   poems/            one file per poem           -> /<file-name>/
-  pages/            books, sonnets, photography, design galleries, about, home page text (YAML)
+  pages/            books, sonnets, photography, web design gallery, about, home page text (YAML)
+  site.yml          tagline, menu, footer, contact details
 templates/          the page layouts (Jinja2 HTML)
 static/             copied as-is: css, js, fonts, images (wp-content/uploads), contact.php, .htaccess
 build.py            turns all of the above into dist/
@@ -24,23 +24,20 @@ tools/              the one-time WordPress importer (kept for reference)
 On github.com, open it, click the pencil icon, change the text, and click **Commit changes**.
 The site updates itself in a few minutes.
 
-**Add a journal post** — create `content/journal/my-new-post.html`:
+**Add a poem** — create `content/poems/my-new-poem.html`:
 
 ```html
 ---
-title: My New Post
+title: My New Poem
 date: '2026-10-01'
-type: journal
-image: /wp-content/uploads/my-photo.jpg     # optional, shown at the top and in lists
+type: poem
 ---
-<p>First paragraph.</p>
-<p>Second paragraph.</p>
+<p>First line<br>
+Second line</p>
+<p>Next stanza</p>
 ```
 
 Put new images in `static/wp-content/uploads/`. The build makes small, fast copies automatically.
-
-**Add a poem** — same idea in `content/poems/`, with `type: poem`. Separate stanzas with `<p>…</p>`
-and lines with `<br>`.
 
 **Add a sonnet, book, or photo** — edit `content/pages/sonnets.yml`, `books.yml`, or `photography.yml`.
 Each entry follows the pattern of the ones already there.
@@ -81,7 +78,8 @@ The old WordPress site is on Bluehost. Once the new site looks right on Hostinge
    If messages don't arrive, check Yahoo's spam folder, and create that mailbox in hPanel → Emails.
 5. Keep the Bluehost account for a couple of weeks as a backup, then cancel it.
 
-Old WordPress addresses keep working: every page and post kept its URL, and shop, cart, category,
+Old WordPress addresses keep working: pages and poems kept their URLs; the retired journal posts
+and graphic design page redirect to the home page and web design page; and shop, cart, category,
 date-archive and feed links redirect to the right new page (see `static/.htaccess`).
 
 ## Notes
