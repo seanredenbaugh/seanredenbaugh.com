@@ -158,7 +158,8 @@ blockquote { margin: 0; }
 }
 
 .motto { background: var(--night); color: var(--on-night); padding: clamp(56px, 9vw, 120px) 0; text-align: center; }
-.motto p { font-family: var(--display); font-style: italic; font-size: clamp(1.9rem, 1rem + 3.6vw, 4rem); line-height: 1.12; margin: 0 auto; max-width: 15em; }
+.motto-main { font-family: var(--display); font-style: italic; font-size: clamp(1.9rem, 1rem + 3.6vw, 4rem); line-height: 1.12; margin: 0 auto; max-width: 15em; }
+.motto-lead { font-style: italic; font-size: clamp(1.05rem, .95rem + .5vw, 1.4rem); color: var(--on-night-muted); margin: 0 auto 1.1em; max-width: 34em; }
 
 .crafts { background: var(--page-2); }
 .crafts-inner { display: grid; grid-template-columns: .8fr 2fr; gap: 40px; }
