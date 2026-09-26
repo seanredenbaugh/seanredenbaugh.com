@@ -1,0 +1,51 @@
+# Site-wide settings for seanredenbaugh.com
+# Edit the text after the colons. Keep the indentation (spaces) the way it is.
+# Text containing a colon or starting with a quote mark should be wrapped in "double quotes".
+
+name: Sean Redenbaugh
+
+# The sentence under your name at the top of the home page
+tagline: Novelist, poet, photographer and designer from Evansville, Indiana. A dreamer at heart, a philosopher and thinker by nature.
+
+# The italic lines in the footer of every page (use | and a new line for each line)
+footer_line: |
+  Life’s journey is too vast for me alone,
+  in but a thousand lifetimes to perceive.
+
+# Shown on the Contact page and in the footer
+email: seanredenbaugh@yahoo.com
+phone: +1 812 202 0800
+location: Evansville, Indiana
+
+# What Google shows under the site's name in search results
+description: Sean Redenbaugh is an Evansville, Indiana author and poet — the novels 1000 Shades of Red, Salima Falls and Sunlight Parted — and a photographer and designer.
+
+# The top menu. Each item has a label and a link.
+# Add "children" to make a dropdown (the parent link is used on phones and when clicked).
+menu:
+  - label: Books
+    link: /my-books/
+  - label: Writing
+    link: /other-poetry/
+    children:
+      - label: Poetry
+        link: /other-poetry/
+      - label: Sonnets
+        link: /sonnets/
+      - label: Scripts
+        link: /scripts/
+  - label: Photography
+    link: /photography/
+  - label: Design
+    link: /web-design/
+    children:
+      - label: Web design
+        link: /web-design/
+      - label: Graphic design
+        link: /graphic-design/
+  - label: Journal
+    link: /blog/
+  - label: About
+    link: /about/
+  - label: Contact
+    link: /contact/

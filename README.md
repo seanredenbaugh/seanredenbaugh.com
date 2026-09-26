@@ -20,6 +20,10 @@ tools/              the one-time WordPress importer (kept for reference)
 
 ## Making changes
 
+**Tagline, menu, footer lines, phone and email** all live in one file: `content/site.yml`.
+On github.com, open it, click the pencil icon, change the text, and click **Commit changes**.
+The site updates itself in a few minutes.
+
 **Add a journal post** — create `content/journal/my-new-post.html`:
 
 ```html

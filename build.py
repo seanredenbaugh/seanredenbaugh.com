@@ -9,6 +9,7 @@ Adding things later:
   * a journal post  -> new file in content/journal/<url-slug>.html
   * a poem          -> new file in content/poems/<url-slug>.html
   * a sonnet, book, photo -> edit the matching file in content/pages/
+  * tagline, menu, contact details -> content/site.yml
 Every file in content/journal and content/poems starts with a small header
 (title, date, ...) between --- lines, then the HTML body.
 """
@@ -31,33 +32,26 @@ STATIC = ROOT / "static"
 DIST = ROOT / "dist"
 CACHE = ROOT / ".thumbcache"
 
+_settings = yaml.safe_load((CONTENT / "site.yml").read_text())
 SITE = {
-    "name": "Sean Redenbaugh",
+    "name": _settings["name"],
     "url": "https://www.seanredenbaugh.com",
-    "description": "Sean Redenbaugh is an Evansville, Indiana author and poet — the novels 1000 Shades of Red, Salima Falls and Sunlight Parted — and a photographer and designer.",
-    "email": "seanredenbaugh@yahoo.com",
-    "phone": "+1 812 202 0800",
-    "phone_href": "+18122020800",
-    "location": "Evansville, Indiana",
+    "tagline": _settings["tagline"],
+    "footer_lines": [l for l in _settings["footer_line"].strip().splitlines() if l.strip()],
+    "description": _settings["description"],
+    "email": _settings["email"],
+    "phone": _settings["phone"],
+    "phone_href": "+" + re.sub(r"\D", "", _settings["phone"]),
+    "location": _settings["location"],
     "year": dt.date.today().year,
 }
 
-NAV = [
-    {"label": "Books", "href": "/my-books/"},
-    {"label": "Writing", "href": "/other-poetry/", "children": [
-        {"label": "Poetry", "href": "/other-poetry/"},
-        {"label": "Sonnets", "href": "/sonnets/"},
-        {"label": "Scripts", "href": "/scripts/"},
-    ]},
-    {"label": "Photography", "href": "/photography/"},
-    {"label": "Design", "href": "/web-design/", "children": [
-        {"label": "Web design", "href": "/web-design/"},
-        {"label": "Graphic design", "href": "/graphic-design/"},
-    ]},
-    {"label": "Journal", "href": "/blog/"},
-    {"label": "About", "href": "/about/"},
-    {"label": "Contact", "href": "/contact/"},
-]
+
+def _menu(items):
+    return [{"label": i["label"], "href": i["link"], **({"children": _menu(i["children"])} if i.get("children") else {})} for i in items]
+
+
+NAV = _menu(_settings["menu"])
 
 
 # ------------------------------------------------------------------ content

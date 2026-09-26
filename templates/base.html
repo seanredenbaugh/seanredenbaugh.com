@@ -54,7 +54,7 @@
   <div class="wrap footer-inner">
     <div class="footer-sign">
       <p class="footer-name">Sean Redenbaugh</p>
-      <p class="footer-line">Life’s journey is too vast for me alone,<br>in but a thousand lifetimes to perceive.</p>
+      <p class="footer-line">{% for l in site.footer_lines %}{{ l }}{% if not loop.last %}<br>{% endif %}{% endfor %}</p>
     </div>
     <nav class="footer-nav" aria-label="Footer">
       <a href="/my-books/">Books</a>
