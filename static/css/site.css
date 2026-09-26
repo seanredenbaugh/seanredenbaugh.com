@@ -310,7 +310,7 @@ blockquote { margin: 0; }
 /* ------------------------------------------------ about */
 .about { display: grid; grid-template-columns: minmax(240px, 420px) 1fr; gap: clamp(32px, 6vw, 88px); padding-top: clamp(48px, 7vw, 96px); padding-bottom: 90px; align-items: start; }
 .about-portrait { position: sticky; top: 96px; }
-.about-portrait img { border-radius: 2px; margin-bottom: 1.6em; filter: grayscale(1); }
+.about-portrait img { border-radius: 2px; margin-bottom: 1.6em; }
 .about-quote { font-style: italic; font-size: 1.1em; }
 .about-sections { margin-top: 2em; max-width: 38em; }
 .about-sections details { border-top: 1px solid var(--rule); }

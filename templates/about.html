@@ -2,7 +2,7 @@
 {% block main %}
 <div class="wrap about">
   <div class="about-portrait">
-    <img src="{{ thumb(data.portrait, 800) }}" alt="Sean Redenbaugh in sunglasses" width="569" height="380">
+    {% set sz = img_size(data.portrait) %}<img src="{{ thumb(data.portrait, 800) }}" alt="Portrait of Sean Redenbaugh" width="{{ sz[0] }}" height="{{ sz[1] }}">
     <blockquote class="about-quote"><p>{{ data.quote.text }}</p><footer>{{ data.quote.by }}</footer></blockquote>
   </div>
   <div class="about-body">
