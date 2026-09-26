@@ -10,7 +10,7 @@
     {% if data.intro %}<div class="prose">{% for p in data.intro %}{{ p | safe }}{% endfor %}</div>{% endif %}
     <div class="about-sections">
       {% for s in data.sections %}
-      <details{% if loop.index <= 2 %} open{% endif %}>
+      <details{% if loop.first %} open{% endif %}>
         <summary>{{ s.title }}</summary>
         <div class="prose">{{ s.html | safe }}</div>
       </details>

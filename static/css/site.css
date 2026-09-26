@@ -338,7 +338,7 @@ blockquote { margin: 0; }
 
 /* ------------------------------------------------ about */
 .about { display: grid; grid-template-columns: minmax(240px, 420px) 1fr; gap: clamp(32px, 6vw, 88px); padding-top: clamp(48px, 7vw, 96px); padding-bottom: 90px; align-items: start; }
-.about { grid-template-rows: auto 1fr; }
+.about { grid-template-rows: auto 1fr; row-gap: 20px; }
 .about-title { grid-column: 2; grid-row: 1; margin-bottom: 0; }
 .about-portrait { grid-column: 1; grid-row: 1 / span 2; position: sticky; top: 96px; }
 .about-body { grid-column: 2; grid-row: 2; }
