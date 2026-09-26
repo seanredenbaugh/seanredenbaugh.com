@@ -8,13 +8,13 @@
       <h1>Sean Redenbaugh</h1>
       <p class="hero-lede">{{ site.tagline }}</p>
     </div>
-    <a class="hero-book" href="/my-books/#{{ new.slug }}">
-      <img src="{{ thumb(new.cover, 700) }}" alt="{{ new.title }} book cover" width="700" height="1067">
-      <span class="hero-book-note">
-        <span class="hero-book-kicker">New novel, {{ new.year }}</span>
-        <span class="hero-book-title">{{ new.title }}</span>
-        <span class="hero-book-tag">{{ new.tagline }}</span>
+    <a class="hero-fan" href="/my-books/" aria-label="My books">
+      {% for b in books | reverse %}
+      {% set sz = img_size(b.cover) %}
+      <span class="fan-book fan-{{ loop.index }}" style="--r: {{ '%.3f' | format(sz[0] / sz[1]) }}">
+        <img src="{{ thumb(b.cover, 500) }}" alt="{{ b.title }} ({{ b.year }})" width="{{ sz[0] }}" height="{{ sz[1] }}">
       </span>
+      {% endfor %}
     </a>
   </div>
   <div class="horizon" aria-hidden="true"></div>
