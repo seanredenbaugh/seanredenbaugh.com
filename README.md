@@ -60,8 +60,7 @@ python3 build.py --serve        # then open http://localhost:8000
 3. **Add three secrets to this GitHub repo** (Settings → Secrets and variables → Actions → New repository secret):
    `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`.
 4. **Run the first deploy**: GitHub → Actions → "Build and deploy" → Run workflow.
-   (If the upload lands in the wrong folder, change `server-dir` in `.github/workflows/deploy.yml` —
-   it should end up inside the domain's `public_html`.)
+   (Hostinger's FTP account already opens inside `public_html`, so the workflow uploads to `./`.)
 5. **Check it** with Hostinger's temporary preview link before pointing the domain.
 
 ## Moving the domain off Bluehost
