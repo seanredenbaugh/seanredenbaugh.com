@@ -118,8 +118,16 @@ blockquote { margin: 0; }
 /* ------------------------------------------------ home: hero */
 .hero { position: relative; background: var(--night); color: var(--on-night); overflow: hidden; isolation: isolate; }
 .hero-inner { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: end; gap: clamp(24px, 5vw, 72px); padding-top: 80px; padding-bottom: 80px; position: relative; z-index: 1; }
-.hero h1 { font-size: clamp(2.8rem, 1rem + 6.4vw, 6.4rem); line-height: .95; font-weight: 400; letter-spacing: -.025em; margin-bottom: .35em; }
+.hero-text { --name: clamp(2.8rem, 1rem + 6.4vw, 6.4rem); }
+.hero h1 { font-size: var(--name); line-height: .95; font-weight: 400; letter-spacing: -.025em; margin-bottom: .35em; }
 .hero-lede { margin-bottom: 0; }
+/* Desktop: center the "Redenbaugh" line on the portrait. The tagline sits in a
+   reserved space one name-line tall, so the block's middle is the second line. */
+@media (min-width: 761px) {
+  .hero-text { position: relative; align-self: center; padding-bottom: calc(var(--name) * .95); }
+  .hero-text h1 { margin-bottom: 0; }
+  .hero-text .hero-lede { position: absolute; left: 0; right: 0; top: calc(100% - var(--name) * .95 + var(--name) * .3); }
+}
 .hero-lede { font-size: clamp(1.2rem, 1.05rem + .6vw, 1.55rem); max-width: 28em; color: var(--on-night); line-height: 1.45; }
 .hero-links { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 1.6em; }
 .hero-links a { color: var(--on-night); font-size: 1.15rem; text-decoration-color: rgba(255,255,255,.3); }
