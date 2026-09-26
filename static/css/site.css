@@ -233,10 +233,11 @@ blockquote { margin: 0; }
 @media (max-width: 600px) { .poem-index li a { grid-template-columns: 1fr; gap: 0; } }
 
 /* sonnets */
-.sonnets-layout { display: grid; grid-template-columns: 260px 1fr; gap: clamp(24px, 5vw, 72px); padding-bottom: 80px; }
+.sonnets-layout { display: grid; grid-template-columns: minmax(300px, 380px) 1fr; gap: clamp(24px, 5vw, 72px); padding-bottom: 80px; }
 .sonnet-index { position: sticky; top: 88px; align-self: start; max-height: calc(100vh - 110px); overflow-y: auto; font-size: 1rem; }
 .sonnet-index ol { list-style: none; margin: 0; padding: 0; }
-.sonnet-index a { display: block; padding: 3px 0; text-decoration: none; color: var(--muted); }
+.sonnet-index a { display: grid; grid-template-columns: 2em 1fr; padding: 3px 0; text-decoration: none; color: var(--muted); line-height: 1.35; }
+.sonnet-index .num { min-width: 0; }
 .sonnet-index a:hover { color: var(--red); }
 .num { font-family: var(--display); font-variant-numeric: lining-nums; color: var(--red); display: inline-block; min-width: 2em; }
 .sonnet { padding: 0 0 2.6em; margin-bottom: 2.6em; border-bottom: 1px solid var(--rule); max-width: 34em; scroll-margin-top: 90px; }

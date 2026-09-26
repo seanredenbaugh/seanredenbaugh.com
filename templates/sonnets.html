@@ -10,7 +10,7 @@
 <div class="wrap sonnets-layout">
   <nav class="sonnet-index" aria-label="Sonnets">
     <ol reversed>
-      {% for s in data.sonnets %}<li><a href="#sonnet-{{ s.number }}"><span class="num">{{ s.number }}</span> {{ s.title }}</a></li>{% endfor %}
+      {% for s in data.sonnets %}<li><a href="#sonnet-{{ s.number }}"><span class="num">{{ s.number }}</span><span class="first-line">{{ s.lines[0] }}</span></a></li>{% endfor %}
     </ol>
   </nav>
   <div class="sonnet-list">
