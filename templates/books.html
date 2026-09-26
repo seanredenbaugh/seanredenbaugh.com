@@ -5,7 +5,7 @@
     <h1>Books</h1>
     <p class="lede">Two novels, a memoir, and a collection of poems and photographs. Paperbacks and Kindle editions are available from Amazon, Barnes &amp; Noble and other booksellers.</p>
     <nav class="book-jump" aria-label="Jump to a book">
-      {% for b in books %}<a href="#{{ b.slug }}">{{ b.title }}</a>{% endfor %}
+      {% for b in books %}<a href="#{{ b.slug }}">{{ b.title }} ({{ b.year }})</a>{% endfor %}
     </nav>
   </div>
 </header>
