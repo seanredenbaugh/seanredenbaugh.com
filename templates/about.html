@@ -7,7 +7,7 @@
   </div>
   <div class="about-body">
     <h1>About me</h1>
-    <div class="prose">{% for p in data.intro %}{{ p | safe }}{% endfor %}</div>
+    {% if data.intro %}<div class="prose">{% for p in data.intro %}{{ p | safe }}{% endfor %}</div>{% endif %}
     <div class="about-sections">
       {% for s in data.sections %}
       <details{% if loop.index <= 2 %} open{% endif %}>
