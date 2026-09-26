@@ -144,15 +144,18 @@ blockquote { margin: 0; }
 
 /* ------------------------------------------------ home: sections */
 .shelf, .crafts, .essence, .poem-feature, .journal-teaser, .photo-strip { padding: clamp(56px, 8vw, 110px) 0; }
-.shelf-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 3vw, 40px); align-items: end; }
+.shelf-list { list-style: none; margin: 0; padding: 0; display: flex; gap: clamp(16px, 3vw, 40px); align-items: flex-start; }
+/* each book's width is proportional to its cover's shape, so all covers end up the same height */
+.shelf-list li { flex: var(--r) 1 0; min-width: 0; }
 .shelf-list a { text-decoration: none; display: grid; gap: 4px; }
-.shelf-list img { aspect-ratio: 2/3; object-fit: cover; width: 100%; margin-bottom: 12px; box-shadow: 0 16px 30px -18px rgba(20,22,30,.55); border-radius: 2px; transition: transform .25s; }
-.shelf-list li:last-child img { object-fit: contain; object-position: bottom; box-shadow: none; }
-.shelf-list li:last-child a img { filter: drop-shadow(0 12px 14px rgba(20,22,30,.3)); }
+.shelf-list img { width: 100%; height: auto; margin-bottom: 12px; box-shadow: 0 16px 30px -18px rgba(20,22,30,.55); border-radius: 2px; transition: transform .25s; }
 .shelf-list a:hover img { transform: translateY(-4px); }
 .shelf-title { font-family: var(--display); font-size: 1.25rem; line-height: 1.15; }
 .shelf-meta { color: var(--muted); font-size: 1rem; }
-@media (max-width: 760px) { .shelf-list { grid-template-columns: repeat(2, 1fr); row-gap: 32px; } }
+@media (max-width: 760px) {
+  .shelf-list { flex-wrap: wrap; row-gap: 32px; column-gap: 16px; }
+  .shelf-list li { flex: 0 0 auto; width: calc(180px * var(--r)); }
+}
 
 .motto { background: var(--night); color: var(--on-night); padding: clamp(56px, 9vw, 120px) 0; text-align: center; }
 .motto p { font-family: var(--display); font-style: italic; font-size: clamp(1.9rem, 1rem + 3.6vw, 4rem); line-height: 1.12; margin: 0 auto; max-width: 15em; }

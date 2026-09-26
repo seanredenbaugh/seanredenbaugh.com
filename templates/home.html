@@ -29,7 +29,8 @@
     <h2 class="section-title">Books</h2>
     <ul class="shelf-list">
       {% for b in books %}
-      <li>
+      {% set sz = img_size(b.cover) %}
+      <li style="--r: {{ '%.3f' | format(sz[0] / sz[1]) }}">
         <a href="/my-books/#{{ b.slug }}">
           <img src="{{ thumb(b.cover, 500) }}" alt="{{ b.title }} cover" loading="lazy">
           <span class="shelf-title">{{ b.title }}</span>
