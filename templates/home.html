@@ -6,7 +6,7 @@
   <div class="wrap hero-inner">
     <div class="hero-text">
       <h1>Sean Redenbaugh</h1>
-      <p class="hero-lede">{{ site.tagline }}</p>
+      <p class="hero-lede">{{ site.tagline | safe }}</p>
     </div>
     <figure class="hero-portrait">
       {% set sz = img_size('/wp-content/uploads/sean-headshot.jpg') %}

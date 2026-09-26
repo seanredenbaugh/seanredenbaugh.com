@@ -4,8 +4,8 @@
 
 name: Sean Redenbaugh
 
-# The sentence under your name at the top of the home page
-tagline: "Novelist, Poet, Dreamer at heart..."
+# The sentence under your name at the top of the home page (<em>…</em> makes a book title italic)
+tagline: "Author of <em>Sunlight Parted</em>, <em>Salima Falls</em> and <em>1000 Shades of Red</em>."
 
 # The italic lines in the footer of every page (use | and a new line for each line)
 footer_line: |
